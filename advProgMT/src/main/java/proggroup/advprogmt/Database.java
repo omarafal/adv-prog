@@ -8,16 +8,10 @@ public class Database {
     private String[] part2;
     private int partsLength = 0;
     private String[] temp = new String[100]; // will store part1 at even and part2 at odd
-    private static String path;
+    private static String path = "src/main/java/proggroup/advprogmt/Database/";
 
-    public Database(String fileName){
+    public Database(String fileName/*, Boolean search*/){
         try{
-            if(System.getProperty("os.name").split(" ")[0].equals("Linux")){
-                path = "src/main/java/proggroup/advprogmt/Database/";
-            }
-            else{
-                path = "src\\main\\java\\proggroup\\advprogmt\\Database\\";
-            }
             file = new BufferedReader(new FileReader(path + fileName));
             String currentLine = file.readLine();
 
