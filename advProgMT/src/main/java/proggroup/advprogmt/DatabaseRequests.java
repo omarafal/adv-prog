@@ -2,7 +2,7 @@ package proggroup.advprogmt;
 
 public class DatabaseRequests extends Database{
     public DatabaseRequests(String fileName){
-        super(fileName);
+        super(fileName, 'r');
     }
 
     public String[] getUsers(){

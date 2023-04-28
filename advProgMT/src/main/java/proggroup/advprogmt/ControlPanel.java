@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.Reader;
@@ -40,19 +41,35 @@ public class ControlPanel extends Application {
         mainStage.show();
     }
     public void addUser(){
-        newStart();
+        newStart("Add a new user");
         mainSection.getChildren().add(new Button("Hello"));
     }
     public void addBook(){
-        newStart();
-        mainSection.getChildren().add(new Button("Hello"));
+//        winTitle.setText("Add a new book");
+        newStart("Add a new book");
+        HBox buttonPane =new HBox();
+
+        Label bookTitle = new Label("Book Title:");
+        bookTitle.setTextAlignment(TextAlignment.LEFT);
+
+        TextField bookField = new TextField();
+
+        subSection.getChildren().addAll(new Label("Book Title:"), bookField);
+        subSection.setPadding(new Insets(-25, 100, 0, 100));
+        subSection.setSpacing(25);
+
+        Button addButton = new Button("Add");
+
+        buttonPane.setAlignment(Pos.BOTTOM_CENTER);
+        buttonPane.getChildren().add(addButton);
+        buttonPane.setPadding(new Insets(80, 0, 0, 0));
+
+        mainSection.getChildren().addAll(subSection, buttonPane);
     }
     public void bookList(){
-
-        winTitle.setText("Book Order List");
-        newStart();
-        mainSection.getChildren().add(scrollPane);
-
+//        winTitle.setText("Book Order List");
+        newStart("Book Order List");
+        alignMainCenter(scrollPane);
 //        // SUBSECTION CONTENTS VVVVVVVVV
 //        Label book = new Label("Book1");
 //        Label user = new Label("User");
@@ -130,7 +147,8 @@ public class ControlPanel extends Application {
         String[] users = new DatabaseRequests("test-requests.txt").getUsers();
         String[] books = new DatabaseRequests("test-requests.txt").getBooks();
 
-        subSection.setSpacing(50);
+        VBox tempBox = new VBox();
+        tempBox.setSpacing(50);
         String color = "";
 
         for(int i = 0; i < users.length; i++){
@@ -140,7 +158,8 @@ public class ControlPanel extends Application {
             buttonsTemp.getChildren().addAll(new Button("✔"), new Button("X"));
 
             temp.getChildren().addAll(new Label(users[i]), new Label(books[i]), buttonsTemp);
-
+//            .setPadding(new Insets(0, 0, 0, 80));
+            HBox.setMargin(temp,new Insets(0,0,0,80));
             alignMainCenter(temp);
             alignMainCenter(buttonsTemp);
 
@@ -148,43 +167,54 @@ public class ControlPanel extends Application {
             buttonsTemp.setSpacing(25);
 
             for(Node button: buttonsTemp.getChildren()){
+                int finalI = i;
                 if(((Button)button).getText() == "✔"){
                     color = "99ff33";
+                    ((Button) button).setOnAction(event -> {
+                        System.out.println("Accept: " + users[finalI] + " with a book of " + books[finalI]);
+
+                    });
                 }
                 else{
                     color = "ff4c33";
                 }
-                button.setStyle("-fx-background-radius: 150;" +
+                ((Button) button).setStyle("-fx-background-radius: 150;" +
                         "-fx-pref-width: 15;" +
                         "-fx-pref-height: 15;" +
                         "-fx-font-weight: bold;"+
                         "-fx-background-color: #" + color + ";");
 
-                button.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                ((Button) button).setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouse) {
                         root.setCursor(Cursor.HAND); // Change cursor to hand
                     }
                 });
 
-                button.setOnMouseExited(new EventHandler<MouseEvent>() {
+                ((Button) button).setOnMouseExited(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouse) {
                         root.setCursor(Cursor.DEFAULT); // Change cursor back to default
                     }
                 });
             }
-            subSection.getChildren().add(temp);
+            tempBox.getChildren().add(temp);
         }
-        //subSection.getChildren().addAll(fields, fields2, fields3, fields4);
-        scrollPane.setContent(subSection);
+//        scrollPane.setStyle("-fx-width: 200;");
+        scrollPane.setContent(tempBox);
+        subSection.getChildren().add(scrollPane);
+        mainSection.getChildren().add(subSection);
     }
 
-    public void newStart(){
-        mainSection.getChildren().clear();
+    public void newStart(String winText){
+        winTitle.setText(winText);
+        mainSection = new VBox();
+        subSection = new VBox();
+        scrollPane = new ScrollPane();
         mainSection.getChildren().addAll(winTitle);
         alignMainCenter(mainSection);
-        alignMainCenter(scrollPane);
+        root.getChildren().clear();
+        root.getChildren().addAll(topBar.getTopBar(),mainSection);
     }
 
     public void alignMainCenter(VBox pane){
@@ -195,10 +225,6 @@ public class ControlPanel extends Application {
     public void alignMainCenter(HBox pane){
         pane.setAlignment(Pos.BASELINE_CENTER);
     }
-
-//    public void alignMainCenter(Box pane){
-//        pane.setStyle("-fx-alignment:center;");
-//    }
 
     public void alignMainCenter(ScrollPane pane){
         pane.setFitToHeight(true);
