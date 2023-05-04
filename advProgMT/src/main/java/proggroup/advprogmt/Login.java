@@ -22,7 +22,7 @@ public class Login{
     Label label3 = new Label();
     Button loginBtn = new Button("Login");
 
-    public void Login (){
+    public void login (){
         label1.setStyle("-fx-font-weight:bold");
         textField1.setPromptText("Enter Your Username");
         textField1.setStyle("-fx-background-radius:15");

@@ -16,8 +16,8 @@ public class Main extends Application {
         mainStage.setResizable(false);
         mainStage.getIcons().add(new Image(Login.class.getResourceAsStream("online-library.png")));
 
-        LoginWindow.Login();
-        HomeWindow.Home();
+        LoginWindow.login();
+
         mainStage.setScene(LoginWindow.loginScene);
 
         LoginWindow.loginBtn.setOnAction(e -> logIn());
@@ -31,6 +31,7 @@ public class Main extends Application {
             MainStage.setTitle("Library System - Home - " + Validation.Type + ": " + Validation.Username);
             LoginWindow.label3.setText("");
             new Alert().display("Welcome "+Validation.Type,"Login Successful!","green");
+            HomeWindow.home();
             MainStage.setScene(HomeWindow.homeScene);
             HomeWindow.checkType();
         }

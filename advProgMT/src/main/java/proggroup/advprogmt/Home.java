@@ -37,7 +37,7 @@ public class Home{
     Label text = new Label();
 //    static Button rent = new Button("Rent");
     Search search = new Search();
-    public void Home(){
+    public void home(){
         searchbar.setPromptText("Search");
         searchbar.setMinWidth(240);
         searchbar.setStyle("-fx-focus-color:grey;");
