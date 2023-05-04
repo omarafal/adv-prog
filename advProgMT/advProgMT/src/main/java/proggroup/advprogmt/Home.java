@@ -95,6 +95,9 @@ public class Home{
         cp.setOnCloseRequest(event -> {
             System.out.println("Stage is closing");
             controlPanel.root.getChildren().clear();
+            controlPanel.root = new VBox();
+            cp.close();
+//            controlPanel = new ControlPanel();
             Home.ctrlPanel_opened = false;
         });
 
@@ -138,7 +141,7 @@ public class Home{
         //controlPanel = new ControlPanel();
         //cp = new Stage();
         //controlPanel.start(cp);
-        new ControlPanel().start(cp);
+       controlPanel.start(cp);
         ctrlPanel_opened = true;
 
     }
