@@ -171,8 +171,8 @@ public class ControlPanel extends Application {
                 if(((Button)button).getText() == "✔"){
                     color = "99ff33";
                     ((Button) button).setOnAction(event -> {
-                        System.out.println("Accept: " + users[finalI] + " with a book of " + books[finalI]);
-
+//                        System.out.println("Accept: " + users[finalI] + " with a book of " + books[finalI]);
+                        new DatabaseLoans("test-loans.txt").add(users[finalI], books[finalI]);
                     });
                 }
                 else{
