@@ -39,7 +39,6 @@ public class Main extends Application {
             } else if (User.type.equals("Librarian")) {
                 homeScreen();
                 HomeWindow.ctrlStage();
-                //new ControlPanel().start(new Stage());
             };
         }
         MainStage.setOnCloseRequest(event -> {
