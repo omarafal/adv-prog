@@ -26,7 +26,6 @@ public class Login{
         label1.setStyle("-fx-font-weight:bold");
         textField1.setPromptText("Enter Your Username");
         textField1.setStyle("-fx-background-radius:15");
-
         textField1.setOnKeyPressed(e -> {
             if (e.getCode().equals(KeyCode.ENTER))
                 passField.requestFocus();
@@ -75,8 +74,6 @@ public class Login{
         VBox.setMargin(showPass,new Insets(0,0,-35,0));
         VBox.setMargin(passShown,new Insets(0,0,-35,0));
 
-
-
         loginScene = new Scene(box1,500,300);
 // box1.setStyle("-fx-background-image:url('https://wallpaperaccess.com/full/4907599.jpg');-fx-background-repeat: no-repeat;-fx-background-size: 500 300;-fx-background-position: center;");
     }
@@ -93,71 +90,6 @@ public class Login{
             passShown.setVisible(false);
         };
     }
-//    public void logIn(){
-//        onClick(LoginWindow.textField1, LoginWindow.passField, LoginWindow.passShown, LoginWindow.label3);
-//        if(Login.UserIsAuth) {
-//            MainStage.setTitle("Library System - Home - " + Validation.Type + ": " + Validation.Username);
-//            label3.setText("");
-//            new Alert().display("Welcome "+Validation.Type,"Login Successful!","green");
-//            MainStage.setScene(HomeWindow.homeScene);
-//            HomeWindow.checkType();
-//        }
-//    }
-//    public void logOut(){
-//        MainStage.setTitle("Library System - Login");
-//        MainStage.setScene(LoginWindow.loginScene);
-//        Login.UserIsAuth =false;
-//        loginBtn.setOnAction(event -> logIn());
-//        showPass.setGraphic(hideIco);
-//        HomeWindow.searchbar.clear();
-//        HomeWindow.bp.setCenter(null);
-//        HomeWindow.type.setValue("Book");
-//    }
-    static boolean UserIsAuth = false;
-    Validation check = new Validation();
-    public void onClick(TextField username, PasswordField password,TextField passShown , Label msg) {
-        if (password.getText().isEmpty())
-            password.setText(passShown.getText());
-        if (username.getText().isEmpty() && password.getText().isEmpty()) {
-            msg.setText("Please enter your Username & Password");
-            msg.setStyle("-fx-text-fill:red");
-        } else if (username.getText().isEmpty()) {
-            msg.setText("Please enter your Username");
-            msg.setStyle("-fx-text-fill:red");
-        } else if (password.getText().isEmpty() && passShown.getText().isEmpty()) {
-            msg.setText("Please enter your Password");
-            msg.setStyle("-fx-text-fill:red");
-        } else if (!(username.getText().isEmpty() && password.getText().isEmpty() && passShown.getText().isEmpty())) {
-            // form function goes here
-            valid(username, password, msg);
-//            WriteData test
-//            try {
-//                data.write(username,password);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-            passShown.clear();
-            password.clear();
-        }
-    }
-    public void valid(TextField username, PasswordField password, Label msg){
-        if (check.validation(username,password)){
-            if (check.isBlocked){
-                msg.setText("This user is blocked. Please contact the library for more information.");
-                msg.setStyle("-fx-text-fill:red");
-            }else {
-                UserIsAuth = true;
-                username.clear();
-                password.clear();
-            }
-        }
-        else {
-            msg.setText("Wrong Credentials");
-            msg.setStyle("-fx-text-fill:red");
-        }
-    }
-
-
 }
 
 

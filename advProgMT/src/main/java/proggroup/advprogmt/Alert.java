@@ -33,7 +33,7 @@ public class Alert {
         Vbox1.setAlignment(Pos.CENTER);
         Vbox1.setSpacing(10);
 
-       Scene alert = new Scene(Vbox1,250,100);
+        Scene alert = new Scene(Vbox1,250,100);
 
         alertStage.setResizable(false);
         alertStage.setScene(alert);
