@@ -7,9 +7,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Librarian extends User{
@@ -32,35 +30,49 @@ public class Librarian extends User{
             }
         }
     }
-    public void removeUser(){
+    public void removeUser(String nameToRemove){
+        BufferedReader br;
+        BufferedWriter bw;
+        try {
+            br = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
+            bw = new BufferedWriter(new FileWriter("src/main/resources/proggroup/advprogmt/Users.txt",true));
+        }catch (IOException e){
 
+        }
     }
     public ListView<Home.HBoxCell> searchUsers(){
         ArrayList<Home.HBoxCell> list = new ArrayList<>();
-        for (String i: Search.usersArr) {
-            if (i!= null) {
-                System.out.println("user "+ i + " added");
-                list.add(new Home.HBoxCell(i, "remove","red","","","Librarian"));
+        if (Search.usersArr != null) {
+            for (String i: Search.usersArr) {
+                if (i!= null) {
+                    System.out.println("user "+ i + " added");
+                    list.add(new Home.HBoxCell(i, "Remove","crimson","","transparent","Librarian"));
+                }
             }
         }
+
         ListView<Home.HBoxCell> listView = new ListView<>();
         ObservableList<Home.HBoxCell> myObservableList = FXCollections.observableList(list);
         listView.setItems(myObservableList);
+        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
         return listView;
     }
     public ListView<Home.HBoxCell> searchBooks(){
         ArrayList<Home.HBoxCell> list = new ArrayList<>();
-        for (String i: search.booksArr) {
-            if (i!= null) {
-                System.out.println("element "+ i + " added");
-                list.add(new Home.HBoxCell(i, "Rent","limegreen","Remove","crimson","Librarian"));
+        if (Search.booksArr != null){
+            for (String i: Search.booksArr) {
+                if (i!= null) {
+                    System.out.println("element "+ i + " added");
+                    list.add(new Home.HBoxCell(i, "Remove","crimson","Rent","limegreen","Librarian"));
+                }
             }
         }
+
         ListView<Home.HBoxCell> listView = new ListView<>();
         ObservableList<Home.HBoxCell> myObservableList = FXCollections.observableList(list);
         listView.setItems(myObservableList);
-
-        listView.setStyle("-fx-background-radius:0;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-background-color:black;-fx-cell-hover-color:grey;-fx-cursor:hand;");
+//          -fx-control-inner-background-alt: grey;-fx-control-inner-background: red;-fx-selection-bar:green;
+        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
         return listView;
     }
 }

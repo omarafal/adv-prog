@@ -31,15 +31,19 @@ public class Reader extends User{
     }
     public ListView<Home.HBoxCell> searchBooks(){
         ArrayList<Home.HBoxCell> list = new ArrayList<>();
-        for (String i: search.booksArr) {
-            if (i!= null) {
-                System.out.println("element "+ i + " added");
-                list.add(new Home.HBoxCell(i, "Rent","limegreen","","","Reader"));
+        if (Search.booksArr != null) {
+            for (String i: Search.booksArr) {
+                if (i!= null) {
+                    System.out.println("element "+ i + " added");
+                    list.add(new Home.HBoxCell(i, "Rent","limegreen","","transparent","Reader"));
+                }
             }
         }
+
         ListView<Home.HBoxCell> listView = new ListView<>();
         ObservableList<Home.HBoxCell> myObservableList = FXCollections.observableList(list);
         listView.setItems(myObservableList);
+        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
         return listView;
     }
 }
