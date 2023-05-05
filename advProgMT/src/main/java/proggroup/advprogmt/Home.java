@@ -28,7 +28,7 @@ public class Home{
     Tooltip toolTip1 = new Tooltip("Control Panel");
     Button logOut = new Button();
     Tooltip toolTip2 = new Tooltip("LogOut");
-    ComboBox<String> type;
+    static ComboBox<String> type;
     ImageView icon1 = new ImageView(new Image(Home.class.getResourceAsStream("settings.png")));
     ImageView icon2 = new ImageView(new Image(Home.class.getResourceAsStream("exit.png")));
     Label text = new Label();
@@ -69,7 +69,7 @@ public class Home{
         type.getItems().addAll("Books");
         type.setValue("Books");
         type.setTranslateX(12);
-        type.setStyle("-fx-focus-color:transparent;-fx-faint-focus-color:transparent");
+        type.setStyle("-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-cursor:hand");
 
         icon1.setFitHeight(20);
         icon1.setPreserveRatio(true);
@@ -86,7 +86,6 @@ public class Home{
         });
 
         cp.setOnCloseRequest(event -> {
-            System.out.println("Stage is closing");
             controlPanel.root.getChildren().clear();
             controlPanel.root = new VBox();
             controlPanel.root.getChildren().clear();
@@ -125,33 +124,49 @@ public class Home{
     }
     public static class HBoxCell extends HBox {
         Label text = new Label();
-        Button rent = new Button();
-        Button remove = new Button();
-        boolean visible;
+        Button btn1 = new Button();
+        Button btn2;
+        Librarian librarian = new Librarian();
+        Reader reader = new Reader();
         HBoxCell(String labelText, String buttonText1, String color1, String buttonText2, String color2, String type) {
             super();
             text.setStyle("-fx-font-size:16");
             text.setText(labelText);
             text.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(text, Priority.ALWAYS);
-            rent.setOnAction(e->{
-                System.out.println(labelText + " button pressed");
-            });
-            remove.setOnAction(e->{
-                System.out.println(labelText + " removed");
-            });
-            if (type.equals("Librarian")) {
-                visible = true;
-            }else visible = false;
-            remove.setText(buttonText2);
-            remove.setStyle("-fx-background-radius:7;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-background-color:"+ color2 +";-fx-cursor:hand;");
-            remove.setPadding(new Insets(5,30,5,30));
-            remove.setVisible(visible);
-            rent.setText(buttonText1);
-            rent.setStyle("-fx-background-radius:7;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-background-color:"+ color1 +";-fx-cursor:hand;");
-            rent.setPadding(new Insets(5,38,5,38));
-            this.getChildren().addAll(text, remove,rent);
-            HBox.setMargin(remove, new Insets(0,10,0,0));
+            this.getChildren().add(text);
+            if (type.equals("Librarian")){
+                if (!Home.type.getValue().equals("Users")){
+                    btn2 = new Button();
+                    btn2.setText(buttonText2);
+                    btn2.setStyle("-fx-background-radius:7;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-background-color:" + color2 + ";-fx-cursor:hand;");
+                    btn2.setPadding(new Insets(4, 38, 4, 38));
+                    btn2.setOnAction(e -> {
+                        System.out.println(labelText + " pressed");
+                        librarian.removeUser(labelText);
+                    });
+                    this.getChildren().add(btn2);
+                    HBox.setMargin(btn2, new Insets(0, 10, 0, 0));
+                }
+                this.getChildren().add(btn1);
+                btn1.setText(buttonText1);
+                btn1.setStyle("-fx-background-radius:7;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-background-color:" + color1 + ";-fx-cursor:hand;");
+                btn1.setPadding(new Insets(4, 30, 4, 30));
+                btn1.setOnAction(e -> {
+                    System.out.println(labelText + " removed");
+                });
+            }else {
+                this.getChildren().add(btn1);
+                btn1.setText(buttonText1);
+                btn1.setStyle("-fx-background-radius:7;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-background-color:"+ color1 +";-fx-cursor:hand;");
+                btn1.setPadding(new Insets(4,38,4,38));
+                btn1.setOnAction(e->{
+                    System.out.println(labelText + " rent pressed");
+                });
+            }
+
         }
+
+
     }
 }

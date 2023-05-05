@@ -41,9 +41,7 @@ public class Main extends Application {
                 HomeWindow.ctrlStage();
             };
         }
-        MainStage.setOnCloseRequest(event -> {
-            HomeWindow.cp.close();
-        });
+        MainStage.setOnCloseRequest(event -> HomeWindow.cp.close());
     }
     public void homeScreen(){
         MainStage.setTitle("Library System - Home - " + User.type + ": " + User.userName);
@@ -64,5 +62,8 @@ public class Main extends Application {
         HomeWindow.type.getItems().remove("Users");
         HomeWindow.bp.setCenter(null);
         HomeWindow.type.setValue("Books");
+        HomeWindow.search.booksArr=null;
+        HomeWindow.search.usersArr=null;
+        HomeWindow.search.result=null;
     }
 }
