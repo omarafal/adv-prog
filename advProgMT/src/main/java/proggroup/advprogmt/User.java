@@ -1,6 +1,7 @@
 package proggroup.advprogmt;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -8,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class User {
+public abstract class User {
 //    (Username(ID),Password,Type,FirstName,LastName,Address,CellPhone,Email,isBlocked).
     public static String userName;
     public String password;
@@ -87,6 +88,8 @@ public class User {
         }
         return true;
     }
+
+    public abstract ListView<Home.HBoxCell> searchBooks();
 
 //    public String getUserData() {
 //        return Username + "," + Password + "," + Type + "," + FirstName + "," + LastName + "," + Address + "," + CellPhone + "," + Email + "," + isBlocked;

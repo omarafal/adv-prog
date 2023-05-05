@@ -16,11 +16,9 @@ public class Librarian extends User{
     public Librarian(String Username,String Password,String Type,String FirstName,String LastName,String Address,int CellPhone,String Email){
         super(Username,Password,Type,FirstName,LastName,Address,CellPhone,Email);
     }
-
     public Librarian() {
 
     }
-
     public void addUser(TextField username, TextField password, ChoiceBox type, TextField firstname, TextField lastname,TextField address , TextField cellphone, TextField email){
         BufferedWriter bw;
         {

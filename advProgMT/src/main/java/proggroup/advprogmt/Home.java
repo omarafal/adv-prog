@@ -82,7 +82,7 @@ public class Home{
             if (!ctrlPanel_opened){
                 ctrlStage();
                 Home.ctrlPanel_opened = true;
-            }else alert.display("Error","Control Panel is already opened!","red");
+            }else alert.display("Error","Control Panel is already open!","red");
         });
 
         cp.setOnCloseRequest(event -> {
