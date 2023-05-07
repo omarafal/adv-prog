@@ -33,11 +33,41 @@ public class Librarian extends User{
     public void removeUser(String nameToRemove){
         BufferedReader br;
         BufferedWriter bw;
-        try {
-            br = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
-            bw = new BufferedWriter(new FileWriter("src/main/resources/proggroup/advprogmt/Users.txt",true));
-        }catch (IOException e){
+        String[] users;
+        int size = 0;
+        String file = "src/main/java/proggroup/advprogmt/Database/Users.txt";
 
+        try {
+            br = new BufferedReader(new FileReader(file));
+
+            String line = br.readLine();
+            while(line != null){
+                line = br.readLine();
+                size++;
+            }
+            System.out.println(size);
+            users = new String[size-1];
+            br = new BufferedReader(new FileReader(file));
+
+            line = br.readLine();
+            for(int i = 0; line != null;){
+                if(!(nameToRemove.equals(line.split(",")[0]))){
+                    users[i] = line;
+                    i++;
+                }
+                line = br.readLine();
+            }
+            br.close();
+            bw = new BufferedWriter(new FileWriter(file));
+
+            for(int i = 0; i < size-1; i++){
+                bw.write(users[i]);
+                bw.newLine();
+            }
+            bw.close();
+
+        }catch (IOException e){
+            System.out.println(e);
         }
     }
     public ListView<Home.HBoxCell> searchUsers(){
