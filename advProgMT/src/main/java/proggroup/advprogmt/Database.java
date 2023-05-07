@@ -1,10 +1,7 @@
 package proggroup.advprogmt;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 
-public abstract class Database {
+public class Database {
     private BufferedReader fileR;
     private BufferedWriter fileW;
     private String[] part1;
@@ -13,8 +10,11 @@ public abstract class Database {
     private String[] temp = new String[100]; // will store part1 at even and part2 at odd
     private static String path = "src/main/java/proggroup/advprogmt/Database/";
 
-    public Database() {
-    }
+    private String full;
+
+//    public Database(String fileName) {
+//        path += fileName;
+//    }
 
     public Database(String fileName, char mode) {
         try {
@@ -33,6 +33,9 @@ public abstract class Database {
                 partsLength /= 2;
             } else if (mode == 'w') {
                 fileW = new BufferedWriter(new FileWriter(path + fileName, true));
+            }
+            else if (mode == 'm'/* m for modify */){
+                full = path + fileName;
             }
         } catch (Exception exception) {
             System.out.println("Exception: " + exception);
@@ -68,8 +71,46 @@ public abstract class Database {
         }
     }
 
+    public void removeUser(String nameToRemove){
+        BufferedReader br;
+        BufferedWriter bw;
+        String[] users;
+        int size = 0;
+
+//        String nameToRemove = "User name"; // parameter
+//        String file = "/home/omarafal/Desktop/testBench/Java/sample-2/User.txt";
+        try {
+            br = new BufferedReader(new FileReader(full));
+
+            String line = br.readLine();
+            while(line != null){
+                line = br.readLine();
+                size++;
+            }
+//            System.out.println(size);
+            users = new String[size-1];
+            br = new BufferedReader(new FileReader(full));
+
+            line = br.readLine();
+            for(int i = 0; line != null;){
+                if(!(nameToRemove.equals(line.split("@")[0]))){
+                    users[i] = line;
+                    i++;
+                }
+                line = br.readLine();
+            }
+            br.close();
+            bw = new BufferedWriter(new FileWriter(full));
+
+            for(int i = 0; i < size-1; i++){
+                bw.write(users[i]);
+                bw.newLine();
+            }
+            bw.close();
+
+        }catch (IOException e){
+            System.out.println(e);
+        }
+    }
+
 }
-//    public static void setPath(String path){
-//        Database.path = path;
-//    }
-//}

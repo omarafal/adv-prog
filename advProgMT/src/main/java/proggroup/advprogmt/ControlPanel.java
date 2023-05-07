@@ -70,85 +70,11 @@ public class ControlPanel extends Application {
         mainSection.getChildren().addAll(subSection, buttonPane);
     }
     public void bookList(){
-//        winTitle.setText("Book Order List");
         newStart("Book Order List");
         alignMainCenter(scrollPane);
-//        // SUBSECTION CONTENTS VVVVVVVVV
-//        Label book = new Label("Book1");
-//        Label user = new Label("User");
-//        Button accept = new Button("✔");
-//        Button deny = new Button("X");
-//
-//        Label book2 = new Label("Book2");
-//        Label user2 = new Label("User");
-//        Button accept2 = new Button("✔");
-//        Button deny2 = new Button("X");
-//
-//        Label book3 = new Label("Book3");
-//        Label user3 = new Label("User");
-//        Button accept3 = new Button("✔");
-//        Button deny3 = new Button("X");
-//
-//        Label book4 = new Label("Book4");
-//        Label user4 = new Label("User");
-//        Button accept4 = new Button("✔");
-//        Button deny4 = new Button("X");
-//
-//        Button[] buttons = {accept, deny, accept2, deny2, accept3, deny3, accept4, deny4};
-//        String color = "99ff33";
-//
-//        for(int i = 0; i < buttons.length; i++){
-//            if(i % 2 == 0){
-//                color = "99ff33";
-//            }
-//            else{
-//                color = "ff4c33";
-//            }
-//            buttons[i].setStyle("-fx-background-radius: 150;" +
-//                    "-fx-pref-width: 15;" +
-//                    "-fx-pref-height: 15;" +
-//                    "-fx-font-weight: bold;"+
-//                    "-fx-background-color: #" + color + ";");
-//
-//            buttons[i].setOnMouseEntered(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent mouse) {
-//                    root.setCursor(Cursor.HAND); // Change cursor to hand
-//                }
-//            });
-//            buttons[i].setOnMouseExited(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent mouse) {
-//                    root.setCursor(Cursor.DEFAULT); // Change cursor back to default
-//                }
-//            });
-//        }
-//
-//
-//        HBox[] sfield = new HBox[5];
-//
-//        HBox fields = new HBox();
-//        fields.setSpacing(50);
-//        fields.getChildren().addAll(book, user, accept, deny);
-//        alignMainCenter(fields);
-//
-//        HBox fields2 = new HBox();
-//        fields2.setSpacing(50);
-//        fields2.getChildren().addAll(book2, user2, accept2, deny2);
-//        alignMainCenter(fields2);
-//
-//        HBox fields3 = new HBox();
-//        fields3.setSpacing(50);
-//        fields3.getChildren().addAll(book3, user3, accept3, deny3);
-//        alignMainCenter(fields3);
-//
-//        HBox fields4 = new HBox();
-//        fields4.setSpacing(50);
-//        fields4.getChildren().addAll(book4, user4, accept4, deny4);
-//        alignMainCenter(fields4);
-//        // SUBSECTION CONTENTS END
-        String[] users = new DatabaseRequests("test-requests.txt").getUsers();
-        String[] books = new DatabaseRequests("test-requests.txt").getBooks();
+
+        String[] users = new Database("test-requests.txt", 'r').getPart1();
+        String[] books = new Database("test-requests.txt", 'r').getPart2();
 
         VBox tempBox = new VBox();
         tempBox.setSpacing(50);
@@ -161,7 +87,6 @@ public class ControlPanel extends Application {
             buttonsTemp.getChildren().addAll(new Button("✔"), new Button("X"));
 
             temp.getChildren().addAll(new Label(users[i]), new Label(books[i]), buttonsTemp);
-//            .setPadding(new Insets(0, 0, 0, 80));
             HBox.setMargin(temp,new Insets(0,0,0,80));
             alignMainCenter(temp);
             alignMainCenter(buttonsTemp);
@@ -174,12 +99,16 @@ public class ControlPanel extends Application {
                 if(((Button)button).getText() == "✔"){
                     color = "99ff33";
                     ((Button) button).setOnAction(event -> {
-//                        System.out.println("Accept: " + users[finalI] + " with a book of " + books[finalI]);
-                        new DatabaseLoans("test-loans.txt").add(users[finalI], books[finalI]);
+                        Librarian.acceptRequest(users[finalI], books[finalI]);
+                        bookList(); // call back the same function to set new scene
                     });
                 }
                 else{
                     color = "ff4c33";
+                    ((Button) button).setOnAction(event -> {
+                        Librarian.denyRequest(users[finalI]);
+                        bookList(); // call back the same function to set new scene
+                    });
                 }
                 ((Button) button).setStyle("-fx-background-radius: 150;" +
                         "-fx-pref-width: 15;" +

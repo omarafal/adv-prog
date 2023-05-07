@@ -11,17 +11,21 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Librarian extends User{
+    private BufferedWriter bw;
+    private BufferedReader br;
+    
+    private static String file = "Users.txt";
+    private static String path = "src/main/java/proggroup/advprogmt/Database/" + file;
     public Librarian(String Username,String Password,String Type,String FirstName,String LastName,String Address,int CellPhone,String Email){
         super(Username,Password,Type,FirstName,LastName,Address,CellPhone,Email);
     }
     public Librarian() {
-
     }
     public void addUser(TextField username, TextField password, ChoiceBox type, TextField firstname, TextField lastname,TextField address , TextField cellphone, TextField email){
-        BufferedWriter bw;
         {
             try {
-                bw = new BufferedWriter(new FileWriter("src/main/resources/proggroup/advprogmt/Users.txt",true));
+//                file = "Users.txt";
+                bw = new BufferedWriter(new FileWriter(path,true));
                 bw.write(username + "," + password + "," + type + "," + firstname + "," + lastname + "," + address+ "," + cellphone + "," + email + "," + false);
                 bw.newLine();
                 bw.flush();
@@ -31,14 +35,12 @@ public class Librarian extends User{
         }
     }
     public void removeUser(String nameToRemove){
-        BufferedReader br;
-        BufferedWriter bw;
         String[] users;
         int size = 0;
-        String file = "src/main/java/proggroup/advprogmt/Database/Users.txt";
 
         try {
-            br = new BufferedReader(new FileReader(file));
+//            file = "Users.txt";
+            br = new BufferedReader(new FileReader(path));
 
             String line = br.readLine();
             while(line != null){
@@ -47,7 +49,7 @@ public class Librarian extends User{
             }
             System.out.println(size);
             users = new String[size-1];
-            br = new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new FileReader(path));
 
             line = br.readLine();
             for(int i = 0; line != null;){
@@ -58,7 +60,7 @@ public class Librarian extends User{
                 line = br.readLine();
             }
             br.close();
-            bw = new BufferedWriter(new FileWriter(file));
+            bw = new BufferedWriter(new FileWriter(path));
 
             for(int i = 0; i < size-1; i++){
                 bw.write(users[i]);
@@ -69,6 +71,18 @@ public class Librarian extends User{
         }catch (IOException e){
             System.out.println(e);
         }
+    }
+
+    public static void acceptRequest(String name, String book){
+
+//        file = "Loans.txt";
+        new Database("Loans.txt", 'w').saveP1P2(name, book);
+        new Database("test-requests.txt", 'm').removeUser(name);
+
+    }
+
+    public static void denyRequest(String name){
+        new Database("test-requests.txt", 'm').removeUser(name);
     }
     public ListView<Home.HBoxCell> searchUsers(){
         ArrayList<Home.HBoxCell> list = new ArrayList<>();
@@ -104,5 +118,9 @@ public class Librarian extends User{
 //          -fx-control-inner-background-alt: grey;-fx-control-inner-background: red;-fx-selection-bar:green;
         listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
         return listView;
+    }
+
+    public static void setFile(String path){
+        file = path;
     }
 }

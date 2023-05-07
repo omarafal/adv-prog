@@ -1,6 +1,3 @@
-User name@Book1
-User2@Book2
-User3@Book3
 User4@Book4
-User5@Book5
-User6@Book6
+User3@Book3
+User2@Book2
