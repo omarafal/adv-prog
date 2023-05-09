@@ -1,0 +1,22 @@
+#loginBtn {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+    -fx-border-color:white;
+    -fx-border-radius: 10px;
+}
+#loginBtn:hover {
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-color:white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+.menuBtn{
+    -fx-text-fill:white;
+    -fx-background-color:transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+.menuBtn:hover{
+    -fx-text-fill:lightgrey;
+}

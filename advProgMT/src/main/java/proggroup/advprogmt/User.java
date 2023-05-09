@@ -1,7 +1,6 @@
 package proggroup.advprogmt;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -9,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public abstract class User {
+public class User {
 //    (Username(ID),Password,Type,FirstName,LastName,Address,CellPhone,Email,isBlocked).
     public static String userName;
     public String password;
@@ -44,21 +43,23 @@ public abstract class User {
         boolean matches = false;
         try {
             brv = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
+            temp = brv.readLine();
             while ((temp = brv.readLine())!= null){
                 if (username.getText().equals(temp.split(",")[0])){
-                    if (password.getText().equals(temp.split(",")[1])) {
+                    if (password.getText().equals(temp.split(",")[1]) || passShown.getText().equals(temp.split(",")[1])) {
                         isBlocked = temp.split(",")[8].equals("true");
                         matches = true;
                         type = temp.split(",")[2];
                         userName = temp.split(",")[0];
+                        msg.setText("");
                         break;
                     }else {
                         msg.setText("Wrong Credentials");
                         msg.setStyle("-fx-text-fill:red");
                     }
-                        username.clear();
-                        passShown.clear();
-                        password.clear();
+                    username.clear();
+                    passShown.clear();
+                    password.clear();
                 } else {
                     msg.setText("Wrong Credentials");
                     msg.setStyle("-fx-text-fill:red");
@@ -88,8 +89,6 @@ public abstract class User {
         }
         return true;
     }
-
-    public abstract ListView<Home.HBoxCell> searchBooks();
 
 //    public String getUserData() {
 //        return Username + "," + Password + "," + Type + "," + FirstName + "," + LastName + "," + Address + "," + CellPhone + "," + Email + "," + isBlocked;

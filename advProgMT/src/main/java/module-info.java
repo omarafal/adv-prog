@@ -4,7 +4,8 @@ module proggroup.advprogmt {
             
         requires org.controlsfx.controls;
             requires com.dlsc.formsfx;
-                        
+    requires com.jfoenix;
+
     opens proggroup.advprogmt to javafx.fxml;
     exports proggroup.advprogmt;
 }

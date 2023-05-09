@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: transparent;" stylesheets="@styling.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proggroup.advprogmt.MainController">
+   <children>
+      <Button layoutX="16.0" layoutY="18.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="3.0" style="-fx-background-color: transparent;" />
+      <ImageView fx:id="imgView" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle arcHeight="40.0" arcWidth="40.0" height="720.0" opacity="0.8" stroke="BLACK" strokeType="INSIDE" styleClass="rectangle" width="1280.0" />
+      <Pane prefHeight="66.0" prefWidth="1280.0" style="-fx-background-color: black; -fx-background-radius: 10 10 0 0;">
+         <children>
+            <HBox fx:id="hbox" prefHeight="46.0" prefWidth="1280.0" style="-fx-background-radius: 10 10 0 0;" />
+            <Circle fill="#ffffff00" layoutX="37.0" layoutY="33.0" radius="28.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@reader.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="73.0" layoutY="9.0" text="Hi," textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="usernameDisplay" layoutX="104.0" layoutY="12.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="typeDisplay" layoutX="76.0" layoutY="34.0" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" layoutX="1243.0" layoutY="33.0" size="22" wrappingWidth="16.300000190734863">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </FontAwesomeIcon>
+      <Button contentDisplay="CENTER" layoutX="1243.0" layoutY="17.0" minHeight="18.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="20.0" prefWidth="16.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <FontAwesomeIcon fill="WHITE" glyphName="MINUS" layoutX="1213.0" layoutY="34.0" size="20" />
+      <Button contentDisplay="CENTER" layoutX="1213.0" layoutY="16.0" minHeight="18.0" minWidth="16.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="20.0" prefWidth="16.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </Button>
+      <Pane layoutX="256.0" layoutY="66.0" prefHeight="654.0" prefWidth="1024.0" style="-fx-background-color: lightgrey; -fx-background-radius: 0 0 10 0;" />
+      <Pane layoutY="66.0" prefHeight="654.0" prefWidth="256.0" style="-fx-background-radius: 0 0 0 10;">
+         <children>
+            <ImageView fitHeight="167.0" fitWidth="165.0" layoutX="46.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@online_library.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="42.0" layoutX="34.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@book.png" />
+               </image>
+            </ImageView>
+            <JFXButton alignment="CENTER_RIGHT" layoutX="11.0" layoutY="224.0" prefHeight="50.0" prefWidth="234.0" styleClass="menuBtn" text="Books" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </JFXButton>
+            <Line fx:id="line1" endX="100.0" layoutX="128.0" layoutY="557.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="BEVEL" strokeWidth="3.0" />
+            <ImageView fx:id="settingsIco" fitHeight="42.0" fitWidth="44.0" layoutX="33.0" layoutY="499.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@control.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="settingsBtn" alignment="CENTER_RIGHT" layoutX="11.0" layoutY="495.0" prefHeight="50.0" prefWidth="234.0" styleClass="menuBtn" text="Settings" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </JFXButton>
+            <Line endX="100.0" layoutX="128.0" layoutY="214.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
+            <ImageView fitHeight="42.0" fitWidth="44.0" layoutX="33.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@logout.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="logoutBtn" alignment="CENTER_RIGHT" layoutX="12.0" layoutY="572.0" onAction="#logut" prefHeight="50.0" prefWidth="234.0" styleClass="menuBtn" text="Logout" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </JFXButton>
+            <Line endX="100.0" layoutX="128.0" layoutY="285.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
+            <JFXButton alignment="CENTER_RIGHT" layoutX="12.0" layoutY="302.0" prefHeight="50.0" prefWidth="234.0" styleClass="menuBtn" text="Search" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" left="40.0" right="40.0" top="10.0" />
+               </padding>
+            </JFXButton>
+            <ImageView fitHeight="42.0" fitWidth="44.0" layoutX="33.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@search.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
