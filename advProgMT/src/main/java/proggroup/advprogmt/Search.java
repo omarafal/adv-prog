@@ -15,11 +15,51 @@ public class Search{
     Alert alert = new Alert();
     int lines;
     int i = 0;
-    public void searchfor(String searchbar, String type){
+    public void searchforBooks(String searchbar){
         if (searchbar.isEmpty()){
             alert.display("Error","Nothing to search!", "red");
             result = null;
-        } else if (type.equals("Users")){
+        } else{
+            try {
+                brs = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Books.txt"));
+                brl = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Books.txt"));
+                lines = 0;
+                while (brl.readLine()!= null){
+                    lines++;
+                }
+                booksArr = new String[lines];
+                for (int i =0;i < lines ;i++)
+                {
+                    temp = brs.readLine();
+                    System.out.println(temp);
+                    if (temp.contains(searchbar.toLowerCase()) || temp.contains(searchbar.toUpperCase()) || searchbar.equals(temp) || searchbar.equals(temp.toLowerCase()) || temp.toLowerCase().contains(searchbar.toLowerCase())){
+                        System.out.println(temp);
+                        booksArr[i]=temp;
+                        System.out.println(booksArr[i]);
+                    }
+                }System.out.println(Arrays.toString(booksArr));
+                for (String e: booksArr) {
+                    if (e != null) {
+                        i = 0;
+                        break;
+                    }
+                    else i = -1;
+                }
+                if(i == -1){
+                    System.out.println("Book " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
+                    result = "Book " + "\"" + searchbar + "\"" + " Was Not Found!";
+                }
+                brs.close();
+                brl.close();
+            }catch (IOException e){
+            }
+        }
+    }
+    public void searchforUsers(String searchbar){
+        if (searchbar.isEmpty()){
+            alert.display("Error","Nothing to search!", "red");
+            result = null;
+        } else{
             try {
                 brs = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
                 brl = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
@@ -49,40 +89,6 @@ public class Search{
                 if(i == -1){
                     System.out.println("User " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
                     result = "User " + "\"" + searchbar + "\"" + " Was Not Found!";
-                }
-                brs.close();
-                brl.close();
-            }catch (IOException e){
-            }
-        }else if (type.equals("Books")) {
-            try {
-                brs = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Books.txt"));
-                brl = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Books.txt"));
-                lines = 0;
-                while (brl.readLine()!= null){
-                    lines++;
-                }
-                booksArr = new String[lines];
-                for (int i =0;i < lines ;i++)
-                {
-                    temp = brs.readLine();
-                    System.out.println(temp);
-                    if (temp.contains(searchbar.toLowerCase()) || temp.contains(searchbar.toUpperCase()) || searchbar.equals(temp) || searchbar.equals(temp.toLowerCase()) || temp.toLowerCase().contains(searchbar.toLowerCase())){
-                        System.out.println(temp);
-                        booksArr[i]=temp;
-                        System.out.println(booksArr[i]);
-                    }
-                }System.out.println(Arrays.toString(booksArr));
-                for (String e: booksArr) {
-                    if (e != null) {
-                        i = 0;
-                        break;
-                    }
-                    else i = -1;
-                }
-                if(i == -1){
-                    System.out.println("Book " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
-                    result = "Book " + "\"" + searchbar + "\"" + " Was Not Found!";
                 }
                 brs.close();
                 brl.close();

@@ -43,14 +43,16 @@ public class Home{
 
         searchBtn.setStyle("-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-cursor:hand;");
         searchBtn.setOnAction(e -> {
-            search.searchfor(searchbar.getText(), type.getValue());
+//            search.searchfor(searchbar.getText(), type.getValue());
             bp.setCenter(null);
             if (search.i==0) {
                 if (User.type.equals("Librarian")){
                     if(type.getValue().equals("Users")){
                         bp.setCenter(librarian.searchUsers());
-                    }else bp.setCenter(librarian.searchBooks());
-                }else bp.setCenter(reader.searchBooks());
+                    }
+//                    else bp.setCenter(librarian.searchBooks());
+                }
+//                else bp.setCenter(reader.searchBooks());
             }else {
                 bp.setCenter(null);
                 System.out.println(search.result +"from home");
