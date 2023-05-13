@@ -18,7 +18,8 @@ public class Librarian extends User{
     public Librarian(String Username,String Password,String Type,String FirstName,String LastName,String Address,int CellPhone,String Email, boolean isBlocked){
         super(Username,Password,Type,FirstName,LastName,Address,CellPhone,Email, isBlocked);
     }
-
+    public Librarian() {
+    }
     public void addUser(String data) throws IOException {
         bw = new BufferedWriter(new FileWriter(path, true));
         bw.write(data);
