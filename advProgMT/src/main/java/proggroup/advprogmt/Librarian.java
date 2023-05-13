@@ -77,12 +77,12 @@ public class Librarian extends User{
 
 //        file = "Loans.txt";
         new Database("Loans.txt", 'w').saveP1P2(name, book);
-        new Database("test-requests.txt", 'm').removeUser(name);
+        new Database("Requests.txt", 'm').removeUser(name);
 
     }
 
     public static void denyRequest(String name){
-        new Database("test-requests.txt", 'm').removeUser(name);
+        new Database("Requests.txt", 'm').removeUser(name);
     }
     public ListView<Home.HBoxCell> searchUsers(){
         ArrayList<Home.HBoxCell> list = new ArrayList<>();

@@ -73,8 +73,8 @@ public class ControlPanel extends Application {
         newStart("Book Order List");
         alignMainCenter(scrollPane);
 
-        String[] users = new Database("test-requests.txt", 'r').getPart1();
-        String[] books = new Database("test-requests.txt", 'r').getPart2();
+        String[] users = new Database("Requests.txt", 'r').getPart1();
+        String[] books = new Database("Requests.txt", 'r').getPart2();
 
         VBox tempBox = new VBox();
         tempBox.setSpacing(50);
