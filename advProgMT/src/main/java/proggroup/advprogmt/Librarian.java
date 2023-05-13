@@ -13,37 +13,21 @@ import java.util.ArrayList;
 public class Librarian extends User{
     private BufferedWriter bw;
     private BufferedReader br;
-    
     private static String file = "Users.txt";
     private static String path = "src/main/java/proggroup/advprogmt/Database/" + file;
-    public Librarian(String Username,String Password,String Type,String FirstName,String LastName,String Address,int CellPhone,String Email){
-        super(Username,Password,Type,FirstName,LastName,Address,CellPhone,Email);
+    public Librarian(String Username,String Password,String Type,String FirstName,String LastName,String Address,int CellPhone,String Email, boolean isBlocked){
+        super(Username,Password,Type,FirstName,LastName,Address,CellPhone,Email, isBlocked);
     }
-    public Librarian() {
-    }
-//    public void addUser(TextField username, TextField password, ChoiceBox type, TextField firstname, TextField lastname,TextField address , TextField cellphone, TextField email){
-//        {
-//            try {
-////                file = "Users.txt";
-//                bw = new BufferedWriter(new FileWriter(path,true));
-//                bw.write(username + "," + password + "," + type + "," + firstname + "," + lastname + "," + address+ "," + cellphone + "," + email + "," + false);
-//                bw.newLine();
-//                bw.flush();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-    public void addUser(String userName, String password, String type, String firstName, String lastName, String address, int cellPhone, String email, boolean isBLocked) throws IOException {
+
+    public void addUser(String data) throws IOException {
         bw = new BufferedWriter(new FileWriter(path, true));
-        bw.write(userName+","+password+","+type+","+firstName+","+lastName+","+address+","+cellPhone+","+email+","+isBLocked);
+        bw.write(data);
         bw.newLine();
         bw.flush();
     }
-
     public void editUser(String userName, String password, String type, String firstName, String lastName, String address, int cellPhone, String email, boolean isBLocked) throws IOException {
         removeUser(userName);
-        addUser(userName, password, type, firstName, lastName, address, cellPhone, email, isBLocked);
+        addUser(new User(userName, password, type, firstName, lastName, address, cellPhone, email, isBLocked).getUserData());
     }
     public void removeUser(String nameToRemove){
         String[] users;

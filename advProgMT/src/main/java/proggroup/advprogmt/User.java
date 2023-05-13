@@ -25,7 +25,7 @@ public class User {
     public User(){
 
     };
-    public User(String Username,String Password,String type,String FirstName,String LastName,String Address,int CellPhone,String Email){
+    public User(String Username,String Password,String type,String FirstName,String LastName,String Address,int CellPhone,String Email, boolean isBLocked){
         this.userName=Username;
         this.password=Password;
         this.type=type;
@@ -34,6 +34,7 @@ public class User {
         this.address=Address;
         this.cellPhone=CellPhone;
         this.email=Email;
+        this.isBlocked = isBLocked;
     }
 
     public static boolean validate(TextField username, PasswordField password,TextField passShown , Label msg){
@@ -90,7 +91,7 @@ public class User {
         return true;
     }
 
-//    public String getUserData() {
-//        return Username + "," + Password + "," + Type + "," + FirstName + "," + LastName + "," + Address + "," + CellPhone + "," + Email + "," + isBlocked;
-//    }
+    public String getUserData() {
+        return userName + "," + password + "," + type + "," + firstName + "," + lastName + "," + address + "," + cellPhone + "," + email + "," + isBlocked;
+    }
 }
