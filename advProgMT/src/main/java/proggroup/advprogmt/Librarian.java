@@ -21,25 +21,35 @@ public class Librarian extends User{
     }
     public Librarian() {
     }
-    public void addUser(TextField username, TextField password, ChoiceBox type, TextField firstname, TextField lastname,TextField address , TextField cellphone, TextField email){
-        {
-            try {
-//                file = "Users.txt";
-                bw = new BufferedWriter(new FileWriter(path,true));
-                bw.write(username + "," + password + "," + type + "," + firstname + "," + lastname + "," + address+ "," + cellphone + "," + email + "," + false);
-                bw.newLine();
-                bw.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//    public void addUser(TextField username, TextField password, ChoiceBox type, TextField firstname, TextField lastname,TextField address , TextField cellphone, TextField email){
+//        {
+//            try {
+////                file = "Users.txt";
+//                bw = new BufferedWriter(new FileWriter(path,true));
+//                bw.write(username + "," + password + "," + type + "," + firstname + "," + lastname + "," + address+ "," + cellphone + "," + email + "," + false);
+//                bw.newLine();
+//                bw.flush();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
+    public void addUser(String userName, String password, String type, String firstName, String lastName, String address, int cellPhone, String email, boolean isBLocked) throws IOException {
+        bw = new BufferedWriter(new FileWriter(path, true));
+        bw.write(userName+","+password+","+type+","+firstName+","+lastName+","+address+","+cellPhone+","+email+","+isBLocked);
+        bw.newLine();
+        bw.flush();
+    }
+
+    public void editUser(String userName, String password, String type, String firstName, String lastName, String address, int cellPhone, String email, boolean isBLocked) throws IOException {
+        removeUser(userName);
+        addUser(userName, password, type, firstName, lastName, address, cellPhone, email, isBLocked);
     }
     public void removeUser(String nameToRemove){
         String[] users;
         int size = 0;
 
         try {
-//            file = "Users.txt";
             br = new BufferedReader(new FileReader(path));
 
             String line = br.readLine();
