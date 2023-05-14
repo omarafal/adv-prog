@@ -74,7 +74,7 @@ public class LoginController {
     }
 
     @FXML
-    protected void logIn()  {
+    protected void logIn(){
         if(User.validate(usernameField, passwordField, passwordShown, errmsgLable)) {
             if(User.type.equals("Reader")){
                 if (!Reader.validate(errmsgLable)){
@@ -139,8 +139,7 @@ public class LoginController {
             stage.setY(event.getScreenY() - yOffset);
         });
         if (imgView != null){
-            Image im = new Image("file:src/main/resources/proggroup/advprogmt/loginBG.jpg",false);
-            imgView.setImage(im);
+            imgView.setImage(new Image("file:src/main/resources/proggroup/advprogmt/loginBG.jpg",false));
             Rectangle clip = new Rectangle();
             clip.setWidth(1280.0);
             clip.setHeight(720);

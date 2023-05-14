@@ -40,19 +40,20 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" layoutX="1243.0" layoutY="33.0" size="22" wrappingWidth="16.300000190734863">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </FontAwesomeIcon>
-      <Button contentDisplay="CENTER" layoutX="1243.0" layoutY="17.0" minHeight="18.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="20.0" prefWidth="16.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
+      <Button contentDisplay="CENTER" layoutX="1243.0" layoutY="16.0" minHeight="18.0" minWidth="16.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="20.0" prefWidth="16.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <opaqueInsets>
             <Insets />
-         </opaqueInsets></Button>
-      <FontAwesomeIcon fill="WHITE" glyphName="MINUS" layoutX="1213.0" layoutY="34.0" size="20" />
+         </opaqueInsets>
+         <graphic>
+            <FontAwesomeIcon fill="#e8ffff" glyphName="CLOSE" size="22" styleClass="close" text="" wrappingWidth="16.300000190734863">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </FontAwesomeIcon>
+         </graphic></Button>
       <Button contentDisplay="CENTER" layoutX="1213.0" layoutY="16.0" minHeight="18.0" minWidth="16.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="20.0" prefWidth="16.0" style="-fx-background-color: transparent;" textAlignment="CENTER" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -60,6 +61,9 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" glyphName="MINUS" size="20" styleClass="minimize" />
+         </graphic>
       </Button>
       <JFXButton id="loginBtn" fx:id="loginBtn" layoutX="574.0" layoutY="550.0" onAction="#logIn" ripplerFill="BLACK" styleClass="jfx-button" text="Login" textFill="WHITE">
          <font>

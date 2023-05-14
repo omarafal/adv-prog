@@ -79,22 +79,35 @@ public class Librarian extends User{
     public static void denyRequest(String name){
         new Database("Requests.txt", 'm').removeUser(name);
     }
-    public ListView<Home.HBoxCell> searchUsers(){
-        ArrayList<Home.HBoxCell> list = new ArrayList<>();
+//    public ListView<Home.HBoxCell> searchUsers(){
+//        ArrayList<Home.HBoxCell> list = new ArrayList<>();
+//        if (Search.usersArr != null) {
+//            for (String i: Search.usersArr) {
+//                if (i!= null) {
+//                    System.out.println("user "+ i + " added");
+//                    list.add(new Home.HBoxCell(i, "Remove","crimson","","transparent","Librarian"));
+//                }
+//            }
+//        }
+//
+//        ListView<Home.HBoxCell> listView = new ListView<>();
+//        ObservableList<Home.HBoxCell> myObservableList = FXCollections.observableList(list);
+//        listView.setItems(myObservableList);
+//        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
+//        return listView;
+//    }
+    public ObservableList<HomeController.HBoxCell> searchUsers(){
+        ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
         if (Search.usersArr != null) {
             for (String i: Search.usersArr) {
                 if (i!= null) {
                     System.out.println("user "+ i + " added");
-                    list.add(new Home.HBoxCell(i, "Remove","crimson","","transparent","Librarian"));
+                    list.add(new HomeController.HBoxCell(i, "Remove","crimson","Edit","#FFC107",User.type));
                 }
             }
         }
-
-        ListView<Home.HBoxCell> listView = new ListView<>();
-        ObservableList<Home.HBoxCell> myObservableList = FXCollections.observableList(list);
-        listView.setItems(myObservableList);
-        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
-        return listView;
+        ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
+        return myObservableList;
     }
 //    public ListView<Home.HBoxCell> searchBooks(){
 //        ArrayList<Home.HBoxCell> list = new ArrayList<>();
@@ -114,23 +127,23 @@ public class Librarian extends User{
 //        return listView;
 //    }
 
-    public ObservableList<HomeController.HBoxCell> searchBooks(){
-        ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
-        if (Search.booksArr != null){
-            for (String i: Search.booksArr) {
-                if (i!= null) {
-                    System.out.println("element "+ i + " added");
-                    list.add(new HomeController.HBoxCell(i, "Remove","crimson","Rent","limegreen","Librarian"));
-                }
-            }
-        }
-//        ListView<Home.HBoxCell> listView = new ListView<>();
-        ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
-//        listView.setItems(myObservableList);
-//          -fx-control-inner-background-alt: grey;-fx-control-inner-background: red;-fx-selection-bar:green;
-//        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
-        return myObservableList;
-    }
+//    public ObservableList<HomeController.HBoxCell> searchBooks(){
+//        ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
+//        if (Search.booksArr != null){
+//            for (String i: Search.booksArr) {
+//                if (i!= null) {
+//                    System.out.println("element "+ i + " added");
+//                    list.add(new HomeController.HBoxCell(i, "Remove","crimson","Rent","limegreen","Librarian"));
+//                }
+//            }
+//        }
+////        ListView<Home.HBoxCell> listView = new ListView<>();
+//        ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
+////        listView.setItems(myObservableList);
+////          -fx-control-inner-background-alt: grey;-fx-control-inner-background: red;-fx-selection-bar:green;
+////        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
+//        return myObservableList;
+//    }
 
     public static void setFile(String path){
         file = path;

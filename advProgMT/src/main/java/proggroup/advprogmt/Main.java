@@ -83,7 +83,7 @@ public class Main extends Application {
 //        LoginWindow.label3.setText("");
 //        new Alert().display("Welcome "+User.type,"Login Successful!","green");
 
-        HomeWindow.checkType();
+//        HomeWindow.checkType();
     }
 
     public void logOut(){

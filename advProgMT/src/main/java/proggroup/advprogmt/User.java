@@ -1,5 +1,7 @@
 package proggroup.advprogmt;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -7,6 +9,7 @@ import javafx.scene.control.TextField;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class User {
 //    (Username(ID),Password,Type,FirstName,LastName,Address,CellPhone,Email,isBlocked).
@@ -90,7 +93,23 @@ public class User {
         }
         return true;
     }
-
+    public ObservableList<HomeController.HBoxCell> searchBooks(){
+        ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
+        if (Search.booksArr != null) {
+            for (String i: Search.booksArr) {
+                if (i!= null) {
+                    System.out.println("element "+ i + " added");
+                    if (type.equals("Librarian")) {
+                        list.add(new HomeController.HBoxCell(i, "Remove","crimson","Rent","limegreen",type));
+                    }else {
+                        list.add(new HomeController.HBoxCell(i, "Rent","limegreen","","transparent",type));
+                    }
+                }
+            }
+        }
+        ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
+        return myObservableList;
+    }
     public String getUserData() {
         return userName + "," + password + "," + type + "," + firstName + "," + lastName + "," + address + "," + cellPhone + "," + email + "," + isBlocked;
     }

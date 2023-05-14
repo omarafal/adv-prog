@@ -1,6 +1,7 @@
 package proggroup.advprogmt;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 public class Search{
     BufferedReader brs;
     BufferedReader brl;
+    BufferedReader bra;
     String temp = "" ;
     String result = null;
     static String [] booksArr = null;
@@ -55,6 +57,22 @@ public class Search{
             }
         }
     }
+    public void viewallBooks(){
+        try {
+            bra = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Books.txt"));
+            brl = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Books.txt"));
+            lines = 0;
+            while (brl.readLine()!= null){
+                lines++;
+            }
+            booksArr = new String[lines];
+            for (int i =0;i < lines ;i++)
+            {
+                booksArr[i] = bra.readLine();
+            }
+        } catch (IOException e) {
+        }
+    }
     public void searchforUsers(String searchbar){
         if (searchbar.isEmpty()){
             alert.display("Error","Nothing to search!", "red");
@@ -94,6 +112,23 @@ public class Search{
                 brl.close();
             }catch (IOException e){
             }
+        }
+    }
+    public void viewallUsers(){
+        try {
+            bra = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
+            brl = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
+            lines = 0;
+            while (brl.readLine()!= null){
+                lines++;
+            }
+            usersArr = new String[lines-1];
+            bra.readLine();
+            for (int i =0;i < lines-1 ;i++)
+            {
+                usersArr[i] = bra.readLine().split(",")[0];
+            }
+        } catch (IOException e) {
         }
     }
 }

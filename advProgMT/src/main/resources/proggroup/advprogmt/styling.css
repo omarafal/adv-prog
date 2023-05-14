@@ -20,3 +20,66 @@
 .menuBtn:hover{
     -fx-text-fill:lightgrey;
 }
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: lightslategrey ;
+    -fx-background-radius:10;
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: gainsboro ;
+    -fx-text-fill: white;
+    -fx-background-radius:10;
+}
+.list-cell:filled {
+    -fx-text-fill: white;
+    -fx-background-radius:10;
+}
+.close:hover{
+    -fx-fill:rgb(232,17,35);
+}
+.minimize:hover{
+    -fx-fill:rgb(229,229,229);
+}
+.ButtonG{
+    -fx-background-radius:7;
+    -fx-focus-color:transparent;
+    -fx-faint-focus-color:transparent;
+    -fx-cursor:hand;
+    -fx-font-size:18;
+    -fx-background-color: limegreen;
+}
+.ButtonG:hover{
+    -fx-background-color: derive(limegreen, -10%);
+}
+.ButtonY:pressed{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+.ButtonR{
+    -fx-background-radius:7;
+    -fx-focus-color:transparent;
+    -fx-faint-focus-color:transparent;
+    -fx-cursor:hand;
+    -fx-font-size:18;
+    -fx-background-color: crimson;
+}
+.ButtonR:hover{
+    -fx-background-color: derive(crimson, -10%);
+}
+.ButtonR:pressed{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+.ButtonY{
+    -fx-background-radius:7;
+    -fx-focus-color:transparent;
+    -fx-faint-focus-color:transparent;
+    -fx-cursor:hand;
+    -fx-font-size:18;
+    -fx-background-color: #FFC107;
+}
+.ButtonY:hover{
+    -fx-background-color: derive(#FFC107, -10%);
+}
+.ButtonY:pressed{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
