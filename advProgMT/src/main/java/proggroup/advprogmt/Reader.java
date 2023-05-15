@@ -28,20 +28,4 @@ public class Reader extends User{
         }
         return true;
     }
-//    public ObservableList<HomeController.HBoxCell> searchBooks(){
-//        ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
-//        if (Search.booksArr != null) {
-//            for (String i: Search.booksArr) {
-//                if (i!= null) {
-//                    System.out.println("element "+ i + " added");
-//                    list.add(new HomeController.HBoxCell(i, "Rent","limegreen","","transparent","Reader"));
-//                }
-//            }
-//        }
-////        ListView<Home.HBoxCell> listView = new ListView<>();
-//        ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
-////        listView.setItems(myObservableList);
-////        listView.setStyle("-fx-border-color:black;-fx-selection-bar:grey");
-//        return myObservableList;
-//    }
 }

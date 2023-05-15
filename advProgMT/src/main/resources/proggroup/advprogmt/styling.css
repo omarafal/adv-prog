@@ -83,3 +83,21 @@
 .ButtonY:pressed{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
+.settingsBtn{
+    -fx-cursor:hand;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+}
+.jfx-check-box > .box {
+    -fx-padding: 10px;
+}
+.jfx-check-box .box,
+.jfx-check-box:indeterminate .box,
+.jfx-check-box:indeterminate:selected .box{
+    -fx-pref-width: 24;
+    -fx-pref-height: 24;
+}
+.jfx-combo-box{
+    -fx-font-size:20;
+    -fx-font-weight:bold;
+}
