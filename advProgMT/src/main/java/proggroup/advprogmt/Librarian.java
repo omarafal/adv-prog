@@ -102,7 +102,7 @@ public class Librarian extends User{
             for (String i: Search.usersArr) {
                 if (i!= null) {
                     System.out.println("user "+ i + " added");
-                    list.add(new HomeController.HBoxCell(i, "Remove","crimson","Edit","#FFC107",User.type));
+                    list.add(new HomeController.HBoxCell(i, "Remove","crimson","Edit","#FFC107",User.getType()));
                 }
             }
         }

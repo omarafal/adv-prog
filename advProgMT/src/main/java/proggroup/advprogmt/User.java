@@ -2,6 +2,8 @@ package proggroup.advprogmt;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -13,14 +15,14 @@ import java.util.ArrayList;
 
 public class User {
 //    (Username(ID),Password,Type,FirstName,LastName,Address,CellPhone,Email,isBlocked).
-    public static String userName;
-    public String password;
-    public static String type;
-    public String firstName;
-    public String lastName;
-    public String address;
-    public int cellPhone;
-    public String email;
+    private static String userName;
+    private String password;
+    private static String type;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private int cellPhone;
+    private String email;
     static BufferedReader brv;
     static String temp;
     static boolean isBlocked = false;
@@ -98,7 +100,7 @@ public class User {
         if (Search.booksArr != null) {
             for (String i: Search.booksArr) {
                 if (i!= null) {
-                    System.out.println("element "+ i + " added");
+//                    System.out.println("element "+ i + " added");
                     if (type.equals("Librarian")) {
                         list.add(new HomeController.HBoxCell(i, "Remove","crimson","Rent","limegreen",type));
                     }else {
@@ -107,10 +109,23 @@ public class User {
                 }
             }
         }
+//        for(Node entity: list.get(0).getChildren()){
+//            ((Button)entity).setOnAction(e -> {
+//                System.out.println("Button detected");
+//            });
+//        }
         ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
         return myObservableList;
     }
     public String getUserData() {
         return userName + "," + password + "," + type + "," + firstName + "," + lastName + "," + address + "," + cellPhone + "," + email + "," + isBlocked;
+    }
+
+    public static String getUserName(){
+        return userName;
+    }
+
+    public static String getType(){
+        return type;
     }
 }

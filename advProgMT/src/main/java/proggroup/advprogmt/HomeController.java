@@ -29,6 +29,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class HomeController {
+    Button tempBtnIgnore = new Button();
+    Label tempLabelIgnore = new Label();
+    Button tempBtnIgnoreRent = new Button();
+    Button tempBtnIgnoreRemove = new Button();
+    String tempStrIgnore;
     @FXML
     AnchorPane anchorPane;
     @FXML
@@ -79,11 +84,11 @@ public class HomeController {
             searchBtn.fire();
     }
     public void checkType(){
-        settingsBtn.setVisible(!User.type.equals("Reader"));
-        settingsIco.setVisible(!User.type.equals("Reader"));
-        line1.setVisible(!User.type.equals("Reader"));
-        usersBtn.setVisible(!User.type.equals("Reader"));
-        usersIco.setVisible(!User.type.equals("Reader"));
+        settingsBtn.setVisible(!User.getType().equals("Reader"));
+        settingsIco.setVisible(!User.getType().equals("Reader"));
+        line1.setVisible(!User.getType().equals("Reader"));
+        usersBtn.setVisible(!User.getType().equals("Reader"));
+        usersIco.setVisible(!User.getType().equals("Reader"));
     }
     public void displayBooks(){
         searchField.setVisible(true);
@@ -96,6 +101,23 @@ public class HomeController {
         search.viewallBooks();
 //        if (User.type.equals("Librarian")){
         bookListview.setItems(user.searchBooks());
+        for(Node entity: bookListview.getItems()){
+            for(Node nested: ((HBoxCell)entity).getChildren()){
+                if(nested.getClass() == tempLabelIgnore.getClass()){
+                    tempStrIgnore = ((Label) nested).getText();
+                }
+                else if(nested.getClass() == tempBtnIgnore.getClass()){
+                    if(((Button) nested).getText() == "Rent"){
+                        tempBtnIgnoreRent = ((Button) nested);
+                    }
+                    else if(((Button) nested).getText() == "Remove"){
+                        tempBtnIgnoreRemove = ((Button) nested);
+                        setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
+                    }
+                };
+
+            }
+        }
 //        }else {
 //            bookListview.setItems(user.searchBooks());
 //        }
@@ -105,6 +127,14 @@ public class HomeController {
         clip.setArcHeight(20);
         clip.setArcWidth(20);
         bookListview.setClip(clip);
+    }
+    public void setEvent(String lbl, Button rent, Button remove){
+        remove.setOnAction(e -> {
+            Book.removeBook(lbl);
+//            System.out.println(lbl);
+            bookListview.setItems(null);
+            displayBooks();
+        });
     }
     public void displayUsers(){
         searchField.setVisible(true);
@@ -147,6 +177,9 @@ public class HomeController {
         }
     }
     public static class HBoxCell extends HBox {
+//        @FXML
+//        JFXButton booksBtn;
+
         Label text = new Label();
         Button btn1 = new Button();
         Button btn2;
@@ -166,7 +199,7 @@ public class HomeController {
                 btn2.setText(buttonText2);
                 btn2.setPadding(new Insets(4, 46, 4, 46));
                 btn2.setOnAction(e -> {
-                    System.out.println(labelText + "Rent pressed");
+                    Book.rentBook(labelText);
 //                        librarian.removeUser(labelText);
                 });
                 this.getChildren().add(btn2);
@@ -176,9 +209,13 @@ public class HomeController {
                 this.getChildren().add(btn1);
                 btn1.setText(buttonText1);
                 btn1.setPadding(new Insets(4, 30, 4, 30));
-                btn1.setOnAction(e -> {
-                    System.out.println(labelText + " removed");
-                });
+
+//                throwBook(labelText);
+//                btn1.setOnAction(e -> {
+//                    Book.removeBook(labelText);
+////                    user.searchBooks();
+////                    User.searchBooks();
+//                });
             }else {
                 this.getChildren().add(btn1);
                 btnColor(btn1,color1);
@@ -190,6 +227,9 @@ public class HomeController {
             }
 
         }
+//        public void throwBook(String name){
+//            tempStrIgnore = name;
+//        }
         public void btnColor(Button btn,String color){
             if (color.equals("crimson")) {
                 btn.getStyleClass().add("ButtonR");
@@ -226,8 +266,8 @@ public class HomeController {
     }
     public void initialize(){
         if (usernameDisplay != null) {
-            usernameDisplay.setText(User.userName);
-            typeDisplay.setText(User.type);
+            usernameDisplay.setText(User.getUserName());
+            typeDisplay.setText(User.getType());
             checkType();
         }
         searchField.setVisible(false);

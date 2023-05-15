@@ -76,11 +76,11 @@ public class LoginController {
     @FXML
     protected void logIn(){
         if(User.validate(usernameField, passwordField, passwordShown, errmsgLable)) {
-            if(User.type.equals("Reader")){
+            if(User.getType().equals("Reader")){
                 if (!Reader.validate(errmsgLable)){
 //                    logOut();
                 }else homeScreen();
-            } else if (User.type.equals("Librarian")) {
+            } else if (User.getType().equals("Librarian")) {
                 homeScreen();
 //                HomeWindow.ctrlStage();
             }
@@ -88,11 +88,11 @@ public class LoginController {
     }
     public void homeScreen(){
         try {
-            new Alert().display("Welcome "+ User.userName,"Login Successful!","green");
+            new Alert().display("Welcome "+ User.getUserName(),"Login Successful!","green");
             Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
             Scene homeScene = new Scene(root, 1280, 720, Color.TRANSPARENT);
             Stage window = (Stage)(loginBtn.getScene().getWindow());
-            window.setTitle("Library System - Home - " + User.type + ": " + User.userName);
+            window.setTitle("Library System - Home - " + User.getType() + ": " + User.getUserName());
             window.setScene(homeScene);
             window.show();
 //            FadeTransition transition = new FadeTransition(Duration.seconds(0.1), root);
