@@ -55,6 +55,8 @@ public class HomeController {
     @FXML
     Pane adduserPane;
     @FXML
+    Pane addbookPane;
+    @FXML
     TextField searchField;
     @FXML
     JFXButton searchBtn;
@@ -92,6 +94,8 @@ public class HomeController {
     @FXML
     JFXCheckBox blockedCB;
     @FXML
+    TextField booktitleField;
+    @FXML
     Line line1;
     @FXML
     Button logoutBtn;
@@ -119,7 +123,11 @@ public class HomeController {
         usersIco.setVisible(!User.getType().equals("Reader"));
     }
     public void displayBooks(){
+<<<<<<< HEAD
         searchField.setVisible(true);
+=======
+        setvisible("main");
+>>>>>>> c3de05e (add Book in settings)
         searchField.clear();
         searchField.setPromptText("Search For Books");
         searchBtn.setVisible(true);
@@ -129,6 +137,7 @@ public class HomeController {
         search.viewallBooks();
 //        if (User.type.equals("Librarian")){
         bookListview.setItems(user.searchBooks());
+<<<<<<< HEAD
         for(Node entity: bookListview.getItems()){
             for(Node nested: ((HBoxCell)entity).getChildren()){
                 if(nested.getClass() == tempLabelIgnore.getClass()){
@@ -155,6 +164,9 @@ public class HomeController {
         clip.setArcHeight(20);
         clip.setArcWidth(20);
         bookListview.setClip(clip);
+=======
+        bookListview.setClip(roundedListview());
+>>>>>>> c3de05e (add Book in settings)
     }
     public void setEvent(String lbl, Button rent, Button remove){
         remove.setOnAction(e -> {
@@ -166,19 +178,21 @@ public class HomeController {
     }
     public void displayUsers(){
         setvisible("main");
-        mainPane.setVisible(true);
         searchField.clear();
         searchField.setPromptText("Search For Users");
         userListview.setVisible(true);
         inBooks = false;
         search.viewallUsers();
         userListview.setItems(librarian.searchUsers());
+        userListview.setClip(roundedListview());
+    }
+    public Rectangle roundedListview(){
         Rectangle clip = new Rectangle();
         clip.setWidth(957);
         clip.setHeight(548);
         clip.setArcHeight(20);
         clip.setArcWidth(20);
-        userListview.setClip(clip);
+        return clip;
     }
     public void search(){
         if (inBooks){
@@ -204,18 +218,17 @@ public class HomeController {
         }
     }
     public void settings(){
-//        setvisible();
-        settingsPane.setVisible(true);
+        setvisible("settings");
     }
     public void newUser(){
         clearFields();
         setvisible("settings");
-        settingsPane.setVisible(true);
         adduserPane.setVisible(true);
     }
     public void newBook(){
         clearFields();
         setvisible("settings");
+        addbookPane.setVisible(true);
     }
     public void orderList(){
         clearFields();
@@ -232,6 +245,7 @@ public class HomeController {
         cellphoneField.clear();
         addressField.clear();
 //        blockedCB.clear();
+
     }
     public static class HBoxCell extends HBox {
         Label text = new Label();
@@ -314,6 +328,7 @@ public class HomeController {
         if (window.equals("settings")) {
             settingsPane.setVisible(true);
             adduserPane.setVisible(false);
+            addbookPane.setVisible(false);
             mainPane.setVisible(false);
             bookListview.setVisible(false);
             userListview.setVisible(false);
