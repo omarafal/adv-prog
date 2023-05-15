@@ -1,6 +1,8 @@
 package proggroup.advprogmt;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,6 +47,14 @@ public class HomeController {
     @FXML
     Label typeDisplay;
     @FXML
+    Pane homePane;
+    @FXML
+    Pane mainPane;
+    @FXML
+    Pane settingsPane;
+    @FXML
+    Pane adduserPane;
+    @FXML
     TextField searchField;
     @FXML
     JFXButton searchBtn;
@@ -63,6 +73,24 @@ public class HomeController {
     Button settingsBtn;
     @FXML
     ImageView settingsIco;
+    @FXML
+    TextField userNameField;
+    @FXML
+    TextField passField;
+    @FXML
+    JFXComboBox type;
+    @FXML
+    TextField firstnameField;
+    @FXML
+    TextField lastnameField;
+    @FXML
+    TextField emailField;
+    @FXML
+    TextField cellphoneField;
+    @FXML
+    TextField addressField;
+    @FXML
+    JFXCheckBox blockedCB;
     @FXML
     Line line1;
     @FXML
@@ -137,12 +165,11 @@ public class HomeController {
         });
     }
     public void displayUsers(){
-        searchField.setVisible(true);
+        setvisible("main");
+        mainPane.setVisible(true);
         searchField.clear();
         searchField.setPromptText("Search For Users");
-        searchBtn.setVisible(true);
         userListview.setVisible(true);
-        bookListview.setVisible(false);
         inBooks = false;
         search.viewallUsers();
         userListview.setItems(librarian.searchUsers());
@@ -163,7 +190,7 @@ public class HomeController {
                 list.add(new HomeController.HBoxCell(search.result));
                 ObservableList<HomeController.HBoxCell> myObservableList = FXCollections.observableList(list);
                 bookListview.setItems(myObservableList);
-                }
+            }
         }else {
             search.searchforUsers(searchField.getText());
             if (search.i==0) {
@@ -176,10 +203,37 @@ public class HomeController {
             }
         }
     }
+    public void settings(){
+//        setvisible();
+        settingsPane.setVisible(true);
+    }
+    public void newUser(){
+        clearFields();
+        setvisible("settings");
+        settingsPane.setVisible(true);
+        adduserPane.setVisible(true);
+    }
+    public void newBook(){
+        clearFields();
+        setvisible("settings");
+    }
+    public void orderList(){
+        clearFields();
+        setvisible("settings");
+    }
+    private void clearFields() {
+        adduserPane.setVisible(true);
+        userNameField.clear();
+        passField.clear();
+//        type.clear();
+        firstnameField.clear();
+        lastnameField.clear();
+        emailField.clear();
+        cellphoneField.clear();
+        addressField.clear();
+//        blockedCB.clear();
+    }
     public static class HBoxCell extends HBox {
-//        @FXML
-//        JFXButton booksBtn;
-
         Label text = new Label();
         Button btn1 = new Button();
         Button btn2;
@@ -199,7 +253,7 @@ public class HomeController {
                 btn2.setText(buttonText2);
                 btn2.setPadding(new Insets(4, 46, 4, 46));
                 btn2.setOnAction(e -> {
-                    Book.rentBook(labelText);
+                    System.out.println(labelText + "Rent pressed");
 //                        librarian.removeUser(labelText);
                 });
                 this.getChildren().add(btn2);
@@ -209,13 +263,9 @@ public class HomeController {
                 this.getChildren().add(btn1);
                 btn1.setText(buttonText1);
                 btn1.setPadding(new Insets(4, 30, 4, 30));
-
-//                throwBook(labelText);
-//                btn1.setOnAction(e -> {
-//                    Book.removeBook(labelText);
-////                    user.searchBooks();
-////                    User.searchBooks();
-//                });
+                btn1.setOnAction(e -> {
+                    System.out.println(labelText + " removed");
+                });
             }else {
                 this.getChildren().add(btn1);
                 btnColor(btn1,color1);
@@ -225,11 +275,7 @@ public class HomeController {
                     System.out.println(labelText + " rent pressed");
                 });
             }
-
         }
-//        public void throwBook(String name){
-//            tempStrIgnore = name;
-//        }
         public void btnColor(Button btn,String color){
             if (color.equals("crimson")) {
                 btn.getStyleClass().add("ButtonR");
@@ -264,16 +310,35 @@ public class HomeController {
             throw new RuntimeException(e);
         }
     }
+    private void setvisible(String window){
+        if (window.equals("settings")) {
+            settingsPane.setVisible(true);
+            adduserPane.setVisible(false);
+            mainPane.setVisible(false);
+            bookListview.setVisible(false);
+            userListview.setVisible(false);
+        } else if (window.equals("main")) {
+            mainPane.setVisible(true);
+            settingsPane.setVisible(false);
+            adduserPane.setVisible(false);
+            bookListview.setVisible(false);
+            userListview.setVisible(false);
+        }
+    }
     public void initialize(){
         if (usernameDisplay != null) {
             usernameDisplay.setText(User.getUserName());
             typeDisplay.setText(User.getType());
             checkType();
         }
-        searchField.setVisible(false);
-        searchBtn.setVisible(false);
+        mainPane.setVisible(false);
+        settingsPane.setVisible(false);
+        adduserPane.setVisible(false);
+//        searchField.setVisible(false);
+//        searchBtn.setVisible(false);
         bookListview.setVisible(false);
         userListview.setVisible(false);
+
         anchorPane.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();

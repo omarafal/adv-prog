@@ -106,8 +106,6 @@ public class LoginController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        usernameDisplay.setText(User.userName);
-//        typeDisplay.setText(User.type);
     }
 
     public void showPass(){
