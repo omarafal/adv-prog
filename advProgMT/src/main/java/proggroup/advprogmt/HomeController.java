@@ -36,6 +36,8 @@ public class HomeController {
     @FXML
     AnchorPane anchorPane;
     @FXML
+    Button focusBtn;
+    @FXML
     HBox hbox;
     @FXML
     ImageView imgView;
@@ -50,9 +52,15 @@ public class HomeController {
     @FXML
     Pane settingsPane;
     @FXML
+    GridPane gridPane;
+    @FXML
+    HBox settingsBtns;
+    @FXML
     Pane adduserPane;
     @FXML
     Pane addbookPane;
+    @FXML
+    Pane editPane;
     @FXML
     TextField searchField;
     @FXML
@@ -66,7 +74,6 @@ public class HomeController {
     ListView<HomeController.HBoxCell> bookListview;
     @FXML
     ListView<HomeController.HBoxCell> userListview;
-    Librarian librarian = new Librarian();
     User user = new User();
     @FXML
     Button settingsBtn;
@@ -114,14 +121,23 @@ public class HomeController {
     @FXML
     Label bookfieldErr;
     @FXML
+    JFXButton addBtn1;
+    @FXML
     Label userAdded;
     @FXML
     Label bookAdded;
+    @FXML
+    Button saveBtn;
+    @FXML
+    Button backBtn;
+    @FXML
+    Label userEdited;
     @FXML
     Line line1;
     @FXML
     Button logoutBtn;
     Scene loginScene;
+    Librarian librarian = new Librarian();
     Book book = new Book();
     static boolean inBooks = true;
     static boolean userExist = false;
@@ -157,34 +173,11 @@ public class HomeController {
         userListview.setVisible(false);
         inBooks = true;
         search.viewallBooks();
-//        if (User.type.equals("Librarian")){
         bookListview.setItems(user.searchBooks());
-        for(Node entity: bookListview.getItems()){
-            for(Node nested: ((HBoxCell)entity).getChildren()){
-                if(nested.getClass() == tempLabelIgnore.getClass()){
-                    tempStrIgnore = ((Label) nested).getText();
-                }
-                else if(nested.getClass() == tempBtnIgnore.getClass()){
-                    if(((Button) nested).getText() == "Rent"){
-                        tempBtnIgnoreRent = ((Button) nested);
-                    }
-                    else if(((Button) nested).getText() == "Remove"){
-                        tempBtnIgnoreRemove = ((Button) nested);
-                        setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
-                    }
-                }
-            }
-        }
+        hboxCell(bookListview,"Rent");
         bookListview.setClip(roundedListview());
     }
-    public void setEvent(String lbl, Button rent, Button remove){
-        remove.setOnAction(e -> {
-            Book.removeBook(lbl);
-//            System.out.println(lbl);
-            bookListview.setItems(null);
-            displayBooks();
-        });
-    }
+
     public void displayUsers(){
         setvisible("main");
         clearFields();
@@ -193,7 +186,12 @@ public class HomeController {
         inBooks = false;
         search.viewallUsers();
         userListview.setItems(librarian.searchUsers());
+        hboxCell(userListview,"Edit");
         userListview.setClip(roundedListview());
+    }
+    public void back(){
+        settingsPane.setVisible(false);
+        displayUsers();
     }
     public Rectangle roundedListview(){
         Rectangle clip = new Rectangle();
@@ -208,6 +206,7 @@ public class HomeController {
             search.searchforBooks(searchField.getText());
             if (search.i==0) {
                 bookListview.setItems(user.searchBooks());
+                hboxCell(bookListview,"Rent");
             }else{
                 ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
                 list.add(new HomeController.HBoxCell(search.result));
@@ -218,6 +217,7 @@ public class HomeController {
             search.searchforUsers(searchField.getText());
             if (search.i==0) {
                 userListview.setItems(librarian.searchUsers());
+                hboxCell(userListview,"Edit");
             }else{
                 ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
                 list.add(new HomeController.HBoxCell(search.result));
@@ -226,11 +226,6 @@ public class HomeController {
             }
         }
     }
-    public void checkSearch(){
-        if (searchField != null){
-            searchBtn.fire();
-        }else displayUsers();
-    }
     public void settings(){
         setvisible("settings");
     }
@@ -238,6 +233,9 @@ public class HomeController {
         clearFields();
         setvisible("settings");
         adduserPane.setVisible(true);
+        gridPane.setVisible(true);
+        userAdded.setVisible(true);
+        addBtn1.setVisible(true);
     }
     public void saveUser(){
         userAdded.setText("");
@@ -336,6 +334,51 @@ public class HomeController {
     private void defaultStyle(TextField field){
         field.setStyle("-fx-background-radius:20;-fx-border-radius:20;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;");
     }
+    public void hboxCell(ListView<HomeController.HBoxCell> listView,String btnlbl){
+        for(Node entity: listView.getItems()){
+            for(Node nested: ((HBoxCell)entity).getChildren()){
+                if(nested.getClass() == tempLabelIgnore.getClass()){
+                    tempStrIgnore = ((Label) nested).getText();
+                }
+                else if(nested.getClass() == tempBtnIgnore.getClass()){
+                    if(((Button) nested).getText().equals(btnlbl)){
+                        tempBtnIgnoreRent = ((Button) nested);
+                        setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
+                    }
+                    else if(((Button) nested).getText().equals("Remove")){
+                        tempBtnIgnoreRemove = ((Button) nested);
+                        setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
+                    }
+                }
+            }
+        }
+    }
+    public void setEvent(String lbl, Button btn1, Button btn2){
+        if (btn1.getText().equals("Edit")){
+            btn1.setOnAction(e -> {
+                System.out.println(lbl+" EDIT BUTTON PRESSED");
+                setvisible("none");
+                clearFields();////////////
+                setvisible("edit");
+                focusBtn.requestFocus();
+                userNameField.setText(lbl);
+            });
+            btn2.setOnAction(e ->{
+
+            });
+        }else if(btn1.getText().equals("Rent")){
+            btn2.setOnAction(e -> {
+                Book.removeBook(lbl);
+                System.out.println(lbl+" book removed!!!");
+                if (searchField.getText() != null) {
+                    searchBtn.fire();
+                }else{
+                    bookListview.setItems(null);
+                    displayBooks();
+                }
+            });
+        }
+    }
     public static class HBoxCell extends HBox {
         Label text = new Label();
         Button btn1 = new Button();
@@ -352,25 +395,22 @@ public class HomeController {
             btn1.getStyleClass().add("Button");
             this.getChildren().add(text);
             if (type.equals("Librarian")){
-//                if (!User.type.equals("Reader")){
                 btn2 = new Button();
                 btnColor(btn2,color2);
                 btn2.setText(buttonText2);
                 btn2.setPadding(new Insets(4, 46, 4, 46));
                 btn2.setOnAction(e -> {
-                    System.out.println(labelText + "Rent pressed");
-//                        librarian.removeUser(labelText);
+//                    System.out.println(labelText + "Rent pressed");
                 });
                 this.getChildren().add(btn2);
                 HBox.setMargin(btn2, new Insets(0, 10, 0, 0));
-//                }
                 btnColor(btn1,color1);
                 this.getChildren().add(btn1);
                 btn1.setText(buttonText1);
                 btn1.setPadding(new Insets(4, 30, 4, 30));
                 btn1.setOnAction(e -> {
-                    librarian.removeUser(labelText);
-                    home.displayUsers();
+//                    librarian.removeUser(labelText);
+//                    home.displayUsers();
                 });
             }else {
                 this.getChildren().add(btn1);
@@ -419,21 +459,56 @@ public class HomeController {
     private void setvisible(String window){
         if (window.equals("settings")) {
             settingsPane.setVisible(true);
+            settingsBtns.setVisible(true);
             adduserPane.setVisible(false);
+            gridPane.setVisible(false);
             addbookPane.setVisible(false);
+            userAdded.setVisible(false);
+            addBtn1.setVisible(false);
+            saveBtn.setVisible(false);
+            blockedCB.setVisible(false);
+            backBtn.setVisible(false);
+            userEdited.setVisible(false);
             mainPane.setVisible(false);
             bookListview.setVisible(false);
             userListview.setVisible(false);
         } else if (window.equals("main")) {
             mainPane.setVisible(true);
             settingsPane.setVisible(false);
+            settingsBtns.setVisible(false);
             adduserPane.setVisible(false);
+            addbookPane.setVisible(false);
+            gridPane.setVisible(false);
+            saveBtn.setVisible(false);
+            backBtn.setVisible(false);
+            userEdited.setVisible(false);
             bookListview.setVisible(false);
             userListview.setVisible(false);
-        }else if (window.equals("none")){
+        }else if (window.equals("edit")){
+            mainPane.setVisible(false);
+            settingsPane.setVisible(true);
+            settingsBtns.setVisible(false);
+            adduserPane.setVisible(true);
+            addbookPane.setVisible(false);
+            gridPane.setVisible(true);
+            userAdded.setVisible(false);
+            addBtn1.setVisible(false);
+            saveBtn.setVisible(true);
+            blockedCB.setVisible(true);
+            backBtn.setVisible(true);
+            userEdited.setVisible(true);
+            bookListview.setVisible(false);
+            userListview.setVisible(false);
+        } else if (window.equals("none")){
             mainPane.setVisible(false);
             settingsPane.setVisible(false);
+            settingsBtns.setVisible(false);
             adduserPane.setVisible(false);
+            gridPane.setVisible(false);
+            addbookPane.setVisible(false);
+            saveBtn.setVisible(false);
+            backBtn.setVisible(false);
+            userEdited.setVisible(false);
             bookListview.setVisible(false);
             userListview.setVisible(false);
         }
@@ -446,6 +521,7 @@ public class HomeController {
         }
         mainPane.setVisible(false);
         settingsPane.setVisible(false);
+        settingsBtns.setVisible(false);
         adduserPane.setVisible(false);
         bookListview.setVisible(false);
         userListview.setVisible(false);

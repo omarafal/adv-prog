@@ -101,12 +101,7 @@ public class User {
         boolean lastnameVaild = true;
         boolean emailValid = true;
         boolean mobileValid = true;
-        if (type == null) {
-            typeErr.setText("Please select user type");
-        }else {
-            typeErr.setText("");
-            typeEmpty = false;
-        }
+
         checkEmpty(username,usernameErr);
         checkEmpty(password,passErr);
         checkEmpty(address,addressErr);
@@ -141,6 +136,12 @@ public class User {
                 mobileValid = false;
                 return mobileValid;
             }else defaultStyle(mobile);
+        }
+        if (type == null) {
+            typeErr.setText("Please select user type");
+        }else {
+            typeErr.setText("");
+            typeEmpty = false;
         }
         return firstnameValid && lastnameVaild && emailValid && mobileValid && !checkEmpty(username,usernameErr) && !checkEmpty(password,passErr) && !typeEmpty && !checkEmpty(firstname,firstnameErr) && !checkEmpty(lastname,lastnameErr) && !checkEmpty(email,emailErr) && !checkEmpty(mobile,cellphoneErr) && !checkEmpty(address,addressErr);
     }
