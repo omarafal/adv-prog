@@ -12,10 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -76,13 +73,32 @@ public class HomeController {
     @FXML
     ImageView settingsIco;
     @FXML
+    JFXButton addUserBtn;
+    @FXML
     TextField userNameField;
     @FXML
-    TextField passField;
+    PasswordField passField;
     @FXML
     JFXComboBox type;
+    String Type;
     @FXML
     TextField firstnameField;
+    @FXML
+    Label usernameErr;
+    @FXML
+    Label passErr;
+    @FXML
+    Label typeErr;
+    @FXML
+    Label firstnameErr;
+    @FXML
+    Label lastnameErr;
+    @FXML
+    Label emailErr;
+    @FXML
+    Label cellphoneErr;
+    @FXML
+    Label addressErr;
     @FXML
     TextField lastnameField;
     @FXML
@@ -96,11 +112,20 @@ public class HomeController {
     @FXML
     TextField booktitleField;
     @FXML
+    Label bookfieldErr;
+    @FXML
+    Label userAdded;
+    @FXML
+    Label bookAdded;
+    @FXML
     Line line1;
     @FXML
     Button logoutBtn;
     Scene loginScene;
+    Book book = new Book();
     static boolean inBooks = true;
+    static boolean userExist = false;
+    static boolean bookExist = false;
     @FXML
     public void closeWindow(){
         System.exit(0);
@@ -123,12 +148,9 @@ public class HomeController {
         usersIco.setVisible(!User.getType().equals("Reader"));
     }
     public void displayBooks(){
-<<<<<<< HEAD
         searchField.setVisible(true);
-=======
         setvisible("main");
->>>>>>> c3de05e (add Book in settings)
-        searchField.clear();
+        clearFields();
         searchField.setPromptText("Search For Books");
         searchBtn.setVisible(true);
         bookListview.setVisible(true);
@@ -137,7 +159,6 @@ public class HomeController {
         search.viewallBooks();
 //        if (User.type.equals("Librarian")){
         bookListview.setItems(user.searchBooks());
-<<<<<<< HEAD
         for(Node entity: bookListview.getItems()){
             for(Node nested: ((HBoxCell)entity).getChildren()){
                 if(nested.getClass() == tempLabelIgnore.getClass()){
@@ -151,22 +172,10 @@ public class HomeController {
                         tempBtnIgnoreRemove = ((Button) nested);
                         setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
                     }
-                };
-
+                }
             }
         }
-//        }else {
-//            bookListview.setItems(user.searchBooks());
-//        }
-        Rectangle clip = new Rectangle();
-        clip.setWidth(957);
-        clip.setHeight(548);
-        clip.setArcHeight(20);
-        clip.setArcWidth(20);
-        bookListview.setClip(clip);
-=======
         bookListview.setClip(roundedListview());
->>>>>>> c3de05e (add Book in settings)
     }
     public void setEvent(String lbl, Button rent, Button remove){
         remove.setOnAction(e -> {
@@ -178,7 +187,7 @@ public class HomeController {
     }
     public void displayUsers(){
         setvisible("main");
-        searchField.clear();
+        clearFields();
         searchField.setPromptText("Search For Users");
         userListview.setVisible(true);
         inBooks = false;
@@ -217,6 +226,11 @@ public class HomeController {
             }
         }
     }
+    public void checkSearch(){
+        if (searchField != null){
+            searchBtn.fire();
+        }else displayUsers();
+    }
     public void settings(){
         setvisible("settings");
     }
@@ -225,32 +239,109 @@ public class HomeController {
         setvisible("settings");
         adduserPane.setVisible(true);
     }
+    public void saveUser(){
+        userAdded.setText("");
+        if (User.validate(userNameField,usernameErr,passField,passErr,type.getValue(),typeErr,firstnameField,firstnameErr,lastnameField,lastnameErr,emailField,emailErr,cellphoneField,cellphoneErr,addressField,addressErr)){
+            try {
+                type.getValue().toString();
+                Type = type.getValue().toString();
+            } catch (NullPointerException | NumberFormatException e) {
+            }
+            try {
+                search.viewallUsers();
+                for (String i : Search.usersArr) {
+                    if (userNameField.getText().equals(i)) {
+                        userExist = true;
+                        break;
+                    } else userExist = false;
+                }
+                if (!userExist) {
+                    librarian.addUser(new User(userNameField.getText(), passField.getText(), Type, firstnameField.getText(), lastnameField.getText(), addressField.getText(), cellphoneField.getText(), emailField.getText(), false).getUserData());
+                    clearFields();
+                    userAdded.setText("User added");
+                    userAdded.setStyle("-fx-text-fill:limegreen");
+                    userExist = false;
+                } else {
+                    userAdded.setText("Username already exists");
+                    userAdded.setStyle("-fx-text-fill:red");
+                }
+            } catch (IOException | NumberFormatException e) {
+            }
+        }
+    }
     public void newBook(){
         clearFields();
         setvisible("settings");
         addbookPane.setVisible(true);
+    }
+    public void saveBook(){
+        bookAdded.setText("");
+        if (!User.checkEmpty(booktitleField,bookfieldErr)){
+            search.viewallBooks();
+            for (String i : Search.booksArr) {
+                if (booktitleField.getText().equals(i)) {
+                    bookExist = true;
+                    break;
+                } else bookExist = false;
+            }if(bookExist){
+                bookAdded.setText("Book already exists");
+                bookAdded.setStyle("-fx-text-fill:red");
+            }else {
+                try {
+                    book.addBook(new Book(booktitleField.getText()).getTitle());
+                    clearFields();
+                    bookAdded.setText("Book Added");
+                    bookAdded.setStyle("-fx-text-fill:limegreen");
+                } catch (NullPointerException e) {
+                }
+            }
+        }
     }
     public void orderList(){
         clearFields();
         setvisible("settings");
     }
     private void clearFields() {
-        adduserPane.setVisible(true);
+        searchField.clear();
         userNameField.clear();
+        type.getSelectionModel().clearSelection();
         passField.clear();
-//        type.clear();
         firstnameField.clear();
         lastnameField.clear();
         emailField.clear();
         cellphoneField.clear();
         addressField.clear();
-//        blockedCB.clear();
-
+        booktitleField.clear();
+        blockedCB.setSelected(false);
+        typeErr.setText("");
+        usernameErr.setText("");
+        defaultStyle(userNameField);
+        passErr.setText("");
+        defaultStyle(passField);
+        firstnameErr.setText("");
+        defaultStyle(firstnameField);
+        lastnameErr.setText("");
+        defaultStyle(lastnameField);
+        emailErr.setText("");
+        defaultStyle(emailField);
+        cellphoneErr.setText("");
+        defaultStyle(cellphoneField);
+        addressErr.setText("");
+        defaultStyle(addressField);
+        userAdded.setText("");
+        bookfieldErr.setText("");
+        defaultStyle(booktitleField);
+        bookAdded.setText("");
+    }
+    private void defaultStyle(TextField field){
+        field.setStyle("-fx-background-radius:20;-fx-border-radius:20;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;");
     }
     public static class HBoxCell extends HBox {
         Label text = new Label();
         Button btn1 = new Button();
         Button btn2;
+        Librarian librarian = new Librarian();
+        HomeController home = new HomeController();
         HBoxCell(String labelText, String buttonText1, String color1, String buttonText2, String color2, String type) {
             super();
             text.setStyle("-fx-font-size:21;-fx-font-weight:bold;");
@@ -278,7 +369,8 @@ public class HomeController {
                 btn1.setText(buttonText1);
                 btn1.setPadding(new Insets(4, 30, 4, 30));
                 btn1.setOnAction(e -> {
-                    System.out.println(labelText + " removed");
+                    librarian.removeUser(labelText);
+                    home.displayUsers();
                 });
             }else {
                 this.getChildren().add(btn1);
@@ -338,6 +430,12 @@ public class HomeController {
             adduserPane.setVisible(false);
             bookListview.setVisible(false);
             userListview.setVisible(false);
+        }else if (window.equals("none")){
+            mainPane.setVisible(false);
+            settingsPane.setVisible(false);
+            adduserPane.setVisible(false);
+            bookListview.setVisible(false);
+            userListview.setVisible(false);
         }
     }
     public void initialize(){
@@ -349,11 +447,9 @@ public class HomeController {
         mainPane.setVisible(false);
         settingsPane.setVisible(false);
         adduserPane.setVisible(false);
-//        searchField.setVisible(false);
-//        searchBtn.setVisible(false);
         bookListview.setVisible(false);
         userListview.setVisible(false);
-
+        type.getItems().addAll("Librarian","Reader");
         anchorPane.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();

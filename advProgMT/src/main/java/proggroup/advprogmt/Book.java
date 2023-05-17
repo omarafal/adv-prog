@@ -3,11 +3,12 @@ package proggroup.advprogmt;
 import java.io.*;
 
 public class Book {
-    String title;
+    private String title;
     public Book(String title){
         this.title=title;
     }
-    public void addBook(){
+    public Book(){}
+    public void addBook(String title){
         BufferedWriter bw;
         {
             try {
@@ -57,7 +58,9 @@ public class Book {
             System.out.println(e);
         }
     }
-
+    public String getTitle() {
+        return title;
+    }
     public static void rentBook(String bookName){
         try{
             BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/java/proggroup/advprogmt/Database/Requests.txt", true));

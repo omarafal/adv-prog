@@ -21,7 +21,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String address;
-    private int cellPhone;
+    private String cellPhone;
     private String email;
     static BufferedReader brv;
     static String temp;
@@ -30,7 +30,7 @@ public class User {
     public User(){
 
     };
-    public User(String Username,String Password,String type,String FirstName,String LastName,String Address,int CellPhone,String Email, boolean isBLocked){
+    public User(String Username,String Password,String type,String FirstName,String LastName,String Address,String CellPhone,String Email, boolean isBLocked){
         this.userName=Username;
         this.password=Password;
         this.type=type;
@@ -95,6 +95,72 @@ public class User {
         }
         return true;
     }
+    public static boolean validate(TextField username, Label usernameErr, PasswordField password, Label passErr, Object type, Label typeErr, TextField firstname, Label firstnameErr, TextField lastname, Label lastnameErr, TextField email, Label emailErr, TextField mobile, Label cellphoneErr, TextField address, Label addressErr){
+        boolean typeEmpty = true;
+        boolean firstnameValid = true;
+        boolean lastnameVaild = true;
+        boolean emailValid = true;
+        boolean mobileValid = true;
+        if (type == null) {
+            typeErr.setText("Please select user type");
+        }else {
+            typeErr.setText("");
+            typeEmpty = false;
+        }
+        checkEmpty(username,usernameErr);
+        checkEmpty(password,passErr);
+        checkEmpty(address,addressErr);
+        if (!checkEmpty(firstname,firstnameErr)) {
+            if (firstname.getText().matches("^\\d+$")) {
+                firstnameErr.setText("Firstname can not contain numbers");
+                errorStyle(firstname);
+                firstnameValid = false;
+                return firstnameValid;
+            }else defaultStyle(firstname);
+        }
+        if(!checkEmpty(lastname,lastnameErr)){
+            if(lastname.getText().matches("^\\d+$")){
+                lastnameErr.setText("Lastname can not contain numbers");
+                errorStyle(lastname);
+                lastnameVaild = false;
+                return lastnameVaild;
+            }else defaultStyle(lastname);
+        }
+        if(!checkEmpty(email,emailErr)){
+            if(!email.getText().contains("@")){
+                emailErr.setText("Email must contain '@'");
+                errorStyle(email);
+                emailValid = false;
+                return emailValid;
+            }else defaultStyle(email);
+        }
+        if(!checkEmpty(mobile,cellphoneErr)){
+            if (!mobile.getText().matches("\\d{8}|\\d{11}")){
+                cellphoneErr.setText("Enter a valid Cellphone");
+                errorStyle(mobile);
+                mobileValid = false;
+                return mobileValid;
+            }else defaultStyle(mobile);
+        }
+        return firstnameValid && lastnameVaild && emailValid && mobileValid && !checkEmpty(username,usernameErr) && !checkEmpty(password,passErr) && !typeEmpty && !checkEmpty(firstname,firstnameErr) && !checkEmpty(lastname,lastnameErr) && !checkEmpty(email,emailErr) && !checkEmpty(mobile,cellphoneErr) && !checkEmpty(address,addressErr);
+    }
+    public static boolean checkEmpty(TextField field,Label label){
+        if(field.getText().isEmpty()){
+            label.setText("This field can't be empty");
+            errorStyle(field);
+            return true;
+        }else {
+            label.setText("");
+            defaultStyle(field);
+            return false;
+        }
+    }
+    private static void defaultStyle(TextField field){
+        field.setStyle("-fx-background-radius:20;-fx-border-radius:20;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;");
+    }
+    private static void errorStyle(TextField field){
+        field.setStyle("-fx-background-radius:20;-fx-border-radius:20;-fx-focus-color:transparent;-fx-faint-focus-color:transparent;-fx-border-color:red;");
+    }
     public ObservableList<HomeController.HBoxCell> searchBooks(){
         ArrayList<HomeController.HBoxCell> list = new ArrayList<>();
         if (Search.booksArr != null) {
@@ -124,8 +190,28 @@ public class User {
     public static String getUserName(){
         return userName;
     }
-
+    public String getPassword(){
+        return password;
+    }
     public static String getType(){
         return type;
+    }
+    public String getFirstname(){
+        return firstName;
+    }
+    public String getLastname(){
+        return lastName;
+    }
+    public String getAddress(){
+        return address;
+    }
+    public String getCellphone(){
+        return cellPhone;
+    }
+    public String getEmail(){
+        return email;
+    }
+    public boolean getisBlocked(){
+        return isBlocked;
     }
 }

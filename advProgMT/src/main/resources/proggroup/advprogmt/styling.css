@@ -101,3 +101,24 @@
     -fx-font-size:20;
     -fx-font-weight:bold;
 }
+.jfx-combo-box-popup{
+    -fx-background-color:black;
+    -fx-selection-bar:black;
+}
+.jfx-combo-box .list-cell:filled:hover {
+   -fx-background-color: gainsboro ;
+   -fx-text-fill: black;
+   -fx-background-radius:10;
+}
+.jfx-combo-box .list-cell:filled {
+   -fx-text-fill: black;
+   -fx-background-radius:10;
+}
+.jfx-combo-box .list-cell:filled:selected:focused, .list-cell:filled:selected {
+   -fx-background-color: lightgrey ;
+   -fx-background-radius:10;
+   -fx-text-fill: black;
+}
+.emptyField{
+    -fx-border-color:red;
+}

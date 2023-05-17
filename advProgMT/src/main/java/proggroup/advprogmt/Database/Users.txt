@@ -5,3 +5,9 @@ user1,123abc,Reader,usero,Useroo,cairo,112233445566,us@gmail.com,false
 user2,123abc,Reader,usero,Useroo,cairo,112233445566,us@gmail.com,true
 1,1,Reader,usero,Useroo,cairo,112233445566,us@gmail.com,false
 0,0,Librarian,admin,admin,cairo,112233445566,ad@gmail.com,false
+z,z,Librarian,z,z,Cairo,1349892118,z@z,false
+0,0,Librarian,0,0,zero,123456789,@,false
+1,1,Reader,1,1,1,1125867339,@,false
+M,z,Librarian,z,z,Z,1501631113,@,false
+v,z,Librarian,z,z,z,01125867339,@,false
+g,df,Librarian,sdf,sdf,sdf,01125867339,sdf@,false

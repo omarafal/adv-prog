@@ -78,11 +78,9 @@ public class LoginController {
         if(User.validate(usernameField, passwordField, passwordShown, errmsgLable)) {
             if(User.getType().equals("Reader")){
                 if (!Reader.validate(errmsgLable)){
-//                    logOut();
                 }else homeScreen();
             } else if (User.getType().equals("Librarian")) {
                 homeScreen();
-//                HomeWindow.ctrlStage();
             }
         }
     }

@@ -15,7 +15,7 @@ public class Reader extends User{
 
     }
 
-    public Reader(String Username,String Password,String Type,String FirstName,String LastName,String Address,int CellPhone,String Email,boolean isBlocked){
+    public Reader(String Username,String Password,String Type,String FirstName,String LastName,String Address,String CellPhone,String Email,boolean isBlocked){
         super(Username,Password,Type,FirstName,LastName,Address,CellPhone,Email, isBlocked);
     }
 
