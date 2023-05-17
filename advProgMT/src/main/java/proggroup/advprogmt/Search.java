@@ -30,8 +30,7 @@ public class Search{
                     lines++;
                 }
                 booksArr = new String[lines];
-                for (int i =0;i < lines ;i++)
-                {
+                for (int i =0;i < lines ;i++) {
                     temp = brs.readLine();
                     System.out.println(temp);
                     if (temp.contains(searchbar.toLowerCase()) || temp.contains(searchbar.toUpperCase()) || searchbar.equals(temp) || searchbar.equals(temp.toLowerCase()) || temp.toLowerCase().contains(searchbar.toLowerCase())){
@@ -39,7 +38,8 @@ public class Search{
                         booksArr[i]=temp;
                         System.out.println(booksArr[i]);
                     }
-                }System.out.println(Arrays.toString(booksArr));
+                }
+//                System.out.println(Arrays.toString(booksArr));
                 for (String e: booksArr) {
                     if (e != null) {
                         i = 0;
@@ -48,7 +48,7 @@ public class Search{
                     else i = -1;
                 }
                 if(i == -1){
-                    System.out.println("Book " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
+//                    System.out.println("Book " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
                     result = "Book " + "\"" + searchbar + "\"" + " Was Not Found!";
                 }
                 brs.close();
@@ -66,8 +66,7 @@ public class Search{
                 lines++;
             }
             booksArr = new String[lines];
-            for (int i =0;i < lines ;i++)
-            {
+            for (int i =0;i < lines ;i++) {
                 booksArr[i] = bra.readLine();
             }
         } catch (IOException e) {
@@ -87,16 +86,16 @@ public class Search{
                 }
                 usersArr = new String[lines-1];
                 temp = brs.readLine();
-                System.out.println(temp + " fisrt line");
+//                System.out.println(temp + " fisrt line");
                 for (int i = 0; i < lines-1; i++) {
                     temp = brs.readLine();
-                    System.out.println(temp + "line number"+(i+2));
+//                    System.out.println(temp + "line number"+(i+2));
                     if (temp.split(",")[0].contains(searchbar.toLowerCase()) || temp.split(",")[0].contains(searchbar.toUpperCase()) || searchbar.equals(temp.split(",")[0]) || searchbar.equals(temp.split(",")[0].toLowerCase()) || temp.split(",")[0].toLowerCase().contains(searchbar.toLowerCase())){
                         usersArr[i]=temp.split(",")[0];
                         System.out.println(usersArr[i]);
                     }
                 }
-                System.out.println(Arrays.toString(usersArr));
+//                System.out.println(Arrays.toString(usersArr));
                 for (String e: usersArr) {
                     if (e != null) {
                         i = 0;
@@ -105,7 +104,7 @@ public class Search{
                     else i = -1;
                 }
                 if(i == -1){
-                    System.out.println("User " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
+//                    System.out.println("User " + "\"" + searchbar + "\"" + " Was Not Found!"+"from search");
                     result = "User " + "\"" + searchbar + "\"" + " Was Not Found!";
                 }
                 brs.close();

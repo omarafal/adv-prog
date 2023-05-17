@@ -345,7 +345,15 @@ public class HomeController {
                         tempBtnIgnoreRent = ((Button) nested);
                         setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
                     }
-                    else if(((Button) nested).getText().equals("Remove")){
+                }
+            }
+        }
+        for(Node entity: listView.getItems() ){
+            for(Node nested: ((HBoxCell)entity).getChildren()){
+                if(nested.getClass() == tempLabelIgnore.getClass()){
+                    tempStrIgnore = ((Label) nested).getText();
+                } else if(nested.getClass() == tempBtnIgnore.getClass()) {
+                    if (((Button) nested).getText().equals("Remove")) {
                         tempBtnIgnoreRemove = ((Button) nested);
                         setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
                     }
@@ -364,13 +372,24 @@ public class HomeController {
                 userNameField.setText(lbl);
             });
             btn2.setOnAction(e ->{
-
+                librarian.removeUser(lbl);
+                System.out.println(lbl + " deleted");
+                if (!searchField.getText().equals("") ) {
+                    searchBtn.fire();
+                }else{
+                    bookListview.setItems(null);
+                    displayUsers();
+                }
             });
         }else if(btn1.getText().equals("Rent")){
+            btn1.setOnAction(e->{
+                System.out.println(lbl +" RENT PRESSED");
+                Book.rentBook(lbl);
+            });
             btn2.setOnAction(e -> {
                 Book.removeBook(lbl);
                 System.out.println(lbl+" book removed!!!");
-                if (searchField.getText() != null) {
+                if (!searchField.getText().equals("") ) {
                     searchBtn.fire();
                 }else{
                     bookListview.setItems(null);
@@ -383,8 +402,6 @@ public class HomeController {
         Label text = new Label();
         Button btn1 = new Button();
         Button btn2;
-        Librarian librarian = new Librarian();
-        HomeController home = new HomeController();
         HBoxCell(String labelText, String buttonText1, String color1, String buttonText2, String color2, String type) {
             super();
             text.setStyle("-fx-font-size:21;-fx-font-weight:bold;");
