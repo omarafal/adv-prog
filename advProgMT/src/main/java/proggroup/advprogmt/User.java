@@ -26,9 +26,9 @@ public class User {
     static BufferedReader brv;
     static String temp;
     static boolean isBlocked = false;
+
     Search search = new Search();
     public User(){
-
     };
     public User(String Username,String Password,String type,String FirstName,String LastName,String Address,String CellPhone,String Email, boolean isBLocked){
         this.userName=Username;
@@ -214,5 +214,59 @@ public class User {
     }
     public boolean getisBlocked(){
         return isBlocked;
+    }
+
+    public static String[] requestInfo(String userName) throws IOException {
+        String[] data;
+
+        brv = new BufferedReader(new FileReader("src/main/java/proggroup/advprogmt/Database/Users.txt"));
+        data = brv.readLine().split(",");
+        String line = data[0];
+
+        while(data != null){
+            if(userName.equals(line)){
+                break;
+            }
+            try{
+                data = brv.readLine().split(",");
+                line = data[0];
+            }
+            catch(NullPointerException e){
+                break;
+            }
+
+        }
+        return data;
+    }
+
+    public static boolean checkChange(Object[] newData, Object[] oldData){
+        if( !((String)newData[0]).equals(((String)oldData[0]))){
+            return true;
+        }
+        if( !((String)newData[1]).equals(((String)oldData[1]))){
+            return true;
+        }
+        if( !((String)newData[2]).equals(((String)oldData[2]))){
+            return true;
+        }
+        if( !((String)newData[3]).equals(((String)oldData[3]))){
+            return true;
+        }
+        if( !((String)newData[4]).equals(((String)oldData[4]))){
+            return true;
+        }
+        if( !((String)newData[5]).equals(((String)oldData[5]))){
+            return true;
+        }
+        if( !((String)newData[6]).equals(((String)oldData[6]))){
+            return true;
+        }
+        if( !((String)newData[7]).equals(((String)oldData[7]))){
+            return true;
+        }
+        if( !(newData[8].toString().equals(oldData[8]))){
+            return true;
+        }
+        return false;
     }
 }

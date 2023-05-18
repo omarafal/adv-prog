@@ -30,8 +30,8 @@ import java.util.ArrayList;
 public class HomeController {
     Button tempBtnIgnore = new Button();
     Label tempLabelIgnore = new Label();
-    Button tempBtnIgnoreRent = new Button();
-    Button tempBtnIgnoreRemove = new Button();
+    Button tempBtnIgnore1 = new Button();
+    Button tempBtnIgnore2 = new Button();
     String tempStrIgnore;
     @FXML
     AnchorPane anchorPane;
@@ -191,6 +191,8 @@ public class HomeController {
     }
     public void back(){
         settingsPane.setVisible(false);
+        setvisible("none");
+//        setvisible("settings");
         displayUsers();
     }
     public Rectangle roundedListview(){
@@ -342,8 +344,8 @@ public class HomeController {
                 }
                 else if(nested.getClass() == tempBtnIgnore.getClass()){
                     if(((Button) nested).getText().equals(btnlbl)){
-                        tempBtnIgnoreRent = ((Button) nested);
-                        setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
+                        tempBtnIgnore1 = ((Button) nested);
+                        setEvent(tempStrIgnore, tempBtnIgnore1, tempBtnIgnore2);
                     }
                 }
             }
@@ -354,8 +356,8 @@ public class HomeController {
                     tempStrIgnore = ((Label) nested).getText();
                 } else if(nested.getClass() == tempBtnIgnore.getClass()) {
                     if (((Button) nested).getText().equals("Remove")) {
-                        tempBtnIgnoreRemove = ((Button) nested);
-                        setEvent(tempStrIgnore, tempBtnIgnoreRent, tempBtnIgnoreRemove);
+                        tempBtnIgnore2 = ((Button) nested);
+                        setEvent(tempStrIgnore, tempBtnIgnore1, tempBtnIgnore2);
                     }
                 }
             }
@@ -364,12 +366,89 @@ public class HomeController {
     public void setEvent(String lbl, Button btn1, Button btn2){
         if (btn1.getText().equals("Edit")){
             btn1.setOnAction(e -> {
-                System.out.println(lbl+" EDIT BUTTON PRESSED");
+//                userEdited.setText("");
+//                System.out.println(lbl+" EDIT BUTTON PRESSED");
                 setvisible("none");
                 clearFields();////////////
                 setvisible("edit");
                 focusBtn.requestFocus();
+                String[] data;
                 userNameField.setText(lbl);
+                try {
+                    data = User.requestInfo(lbl);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                passField.setText(data[1]);
+
+                firstnameField.setText(data[3]);
+                type.setValue(data[2]);
+                lastnameField.setText(data[4]);
+                addressField.setText(data[5]);
+                cellphoneField.setText(data[6]);
+                emailField.setText(data[7]);
+                if(data[8].equals("true"))
+                    blockedCB.setSelected(true);
+                else
+                    blockedCB.setSelected(false);
+
+                saveBtn.setOnAction(y -> {
+                    userEdited.setText("");
+                    if (User.validate(userNameField,usernameErr,passField,passErr,type.getValue(),typeErr,firstnameField,firstnameErr,lastnameField,lastnameErr,emailField,emailErr,cellphoneField,cellphoneErr,addressField,addressErr)){
+                        try {
+//                            type.getValue().toString();
+                            Type = type.getValue().toString();
+                        } catch (NullPointerException | NumberFormatException exc) {
+                        }
+                        try {
+                            Object[] newData = {
+                                    userNameField.getText(),
+                                    passField.getText(),
+                                    type.getValue().toString(),
+                                    firstnameField.getText(),
+                                    lastnameField.getText(),
+                                    addressField.getText(),
+                                    cellphoneField.getText(),
+                                    emailField.getText(),
+                                    blockedCB.isSelected(),
+                            };
+                            if(User.checkChange(newData, data)){
+                                System.out.println(" EDIT BUTTON PRESSED");
+                                librarian.removeUser(data[0]);
+                                librarian.addUser(new User(((String)newData[0]), ((String)newData[1]), ((String)newData[2]), ((String)newData[3]), ((String)newData[4]), ((String)newData[5]), ((String)newData[6]), ((String)newData[7]), ((Boolean)newData[8])).getUserData());
+//                                clearFields();
+                                userEdited.setText("Info updated!");
+                                userEdited.setStyle("-fx-text-fill:limegreen");
+//                                setvisible("edit");
+                            }
+                            else{
+                                userEdited.setText("Please update one of the fields");
+                                userEdited.setStyle("-fx-text-fill:red");
+//                                setvisible("edit");
+                            }
+
+//                            search.viewallUsers();
+//                            for (String i : Search.usersArr) {
+//                                if (userNameField.getText().equals(i)) {
+//                                    userExist = true;
+//                                    break;
+//                                } else userExist = false;
+//                            }
+//                            if (!userExist) {
+//                                librarian.addUser(new User(userNameField.getText(), passField.getText(), Type, firstnameField.getText(), lastnameField.getText(), addressField.getText(), cellphoneField.getText(), emailField.getText(), false).getUserData());
+////                                clearFields();
+//                                userEdited.setText("Info updated!");
+//                                userEdited.setStyle("-fx-text-fill:limegreen");
+//                                userExist = false;
+//                                librarian.removeUser(lbl);
+//                            } else {
+//                                userEdited.setText("Please update one of the fields");
+//                                userEdited.setStyle("-fx-text-fill:red");
+//                            }
+                        } catch( IOException | NumberFormatException exc) {
+                        }
+                    }
+                });
             });
             btn2.setOnAction(e ->{
                 librarian.removeUser(lbl);
@@ -398,10 +477,11 @@ public class HomeController {
             });
         }
     }
+
     public static class HBoxCell extends HBox {
         Label text = new Label();
         Button btn1 = new Button();
-        Button btn2;
+        Button btn2 = new Button();
         HBoxCell(String labelText, String buttonText1, String color1, String buttonText2, String color2, String type) {
             super();
             text.setStyle("-fx-font-size:21;-fx-font-weight:bold;");
