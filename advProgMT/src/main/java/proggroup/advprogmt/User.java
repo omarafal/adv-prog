@@ -16,6 +16,9 @@ import java.util.ArrayList;
 public class User {
 //    (Username(ID),Password,Type,FirstName,LastName,Address,CellPhone,Email,isBlocked).
     private static String userName;
+    private String newType;
+    private boolean newIsBlocked = false;
+    private String newUserName;
     private String password;
     private static String type;
     private String firstName;
@@ -27,19 +30,20 @@ public class User {
     static String temp;
     static boolean isBlocked = false;
 
+
     Search search = new Search();
     public User(){
     };
     public User(String Username,String Password,String type,String FirstName,String LastName,String Address,String CellPhone,String Email, boolean isBLocked){
-        this.userName=Username;
+        this.newUserName=Username;
         this.password=Password;
-        this.type=type;
+        this.newType=type;
         this.firstName=FirstName;
         this.lastName=LastName;
         this.address=Address;
         this.cellPhone=CellPhone;
         this.email=Email;
-        this.isBlocked = isBLocked;
+        this.newIsBlocked = isBLocked;
     }
 
     public static boolean validate(TextField username, PasswordField password,TextField passShown , Label msg){
@@ -185,7 +189,7 @@ public class User {
         return myObservableList;
     }
     public String getUserData() {
-        return userName + "," + password + "," + type + "," + firstName + "," + lastName + "," + address + "," + cellPhone + "," + email + "," + isBlocked;
+        return newUserName + "," + password + "," + newType + "," + firstName + "," + lastName + "," + address + "," + cellPhone + "," + email + "," + newIsBlocked;
     }
 
     public static String getUserName(){
@@ -196,6 +200,9 @@ public class User {
     }
     public static String getType(){
         return type;
+    }
+    public String getNewType(){
+        return newType;
     }
     public String getFirstname(){
         return firstName;
@@ -234,7 +241,6 @@ public class User {
             catch(NullPointerException e){
                 break;
             }
-
         }
         return data;
     }

@@ -86,7 +86,7 @@ public class LoginController {
     }
     public void homeScreen(){
         try {
-            new Alert().display("Welcome "+ User.getUserName(),"Login Successful!","green");
+            new Alert("Welcome "+ User.getUserName(),"Login Successful!","green");
             Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
             Scene homeScene = new Scene(root, 1280, 720, Color.TRANSPARENT);
             Stage window = (Stage)(loginBtn.getScene().getWindow());

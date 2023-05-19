@@ -187,6 +187,7 @@ public class HomeController {
         search.viewallUsers();
         userListview.setItems(librarian.searchUsers());
         hboxCell(userListview,"Edit");
+        userEdited.setText("");
         userListview.setClip(roundedListview());
     }
     public void back(){
@@ -368,7 +369,7 @@ public class HomeController {
             btn1.setOnAction(e -> {
 //                userEdited.setText("");
 //                System.out.println(lbl+" EDIT BUTTON PRESSED");
-                setvisible("none");
+//                setvisible("none");
                 clearFields();////////////
                 setvisible("edit");
                 focusBtn.requestFocus();
@@ -414,12 +415,23 @@ public class HomeController {
                             };
                             if(User.checkChange(newData, data)){
                                 System.out.println(" EDIT BUTTON PRESSED");
-                                librarian.removeUser(data[0]);
-                                librarian.addUser(new User(((String)newData[0]), ((String)newData[1]), ((String)newData[2]), ((String)newData[3]), ((String)newData[4]), ((String)newData[5]), ((String)newData[6]), ((String)newData[7]), ((Boolean)newData[8])).getUserData());
+                                if(User.getUserName().equals(data[0])){
+                                    if(new Alert().Alert("Hold it right there!", "Applying these changes will log you out, are you sure you want to continue?", "red", "Yes", "No")){
+                                        librarian.removeUser(lbl);
+                                        librarian.addUser(new User(((String)newData[0]), ((String)newData[1]), ((String)newData[2]), ((String)newData[3]), ((String)newData[4]), ((String)newData[5]), ((String)newData[6]), ((String)newData[7]), ((Boolean)newData[8])).getUserData());
+                                        logoutBtn.fire();
+                                    }
+                                }
+                                else{
+                                    librarian.removeUser(lbl);
+                                    librarian.addUser(new User(((String)newData[0]), ((String)newData[1]), ((String)newData[2]), ((String)newData[3]), ((String)newData[4]), ((String)newData[5]), ((String)newData[6]), ((String)newData[7]), ((Boolean)newData[8])).getUserData());
 //                                clearFields();
-                                userEdited.setText("Info updated!");
-                                userEdited.setStyle("-fx-text-fill:limegreen");
+                                    userEdited.setText("");
+                                    userEdited.setText("Info updated");
+                                    userEdited.setStyle("-fx-text-fill:limegreen");
 //                                setvisible("edit");
+                                }
+
                             }
                             else{
                                 userEdited.setText("Please update one of the fields");
@@ -427,24 +439,6 @@ public class HomeController {
 //                                setvisible("edit");
                             }
 
-//                            search.viewallUsers();
-//                            for (String i : Search.usersArr) {
-//                                if (userNameField.getText().equals(i)) {
-//                                    userExist = true;
-//                                    break;
-//                                } else userExist = false;
-//                            }
-//                            if (!userExist) {
-//                                librarian.addUser(new User(userNameField.getText(), passField.getText(), Type, firstnameField.getText(), lastnameField.getText(), addressField.getText(), cellphoneField.getText(), emailField.getText(), false).getUserData());
-////                                clearFields();
-//                                userEdited.setText("Info updated!");
-//                                userEdited.setStyle("-fx-text-fill:limegreen");
-//                                userExist = false;
-//                                librarian.removeUser(lbl);
-//                            } else {
-//                                userEdited.setText("Please update one of the fields");
-//                                userEdited.setStyle("-fx-text-fill:red");
-//                            }
                         } catch( IOException | NumberFormatException exc) {
                         }
                     }
@@ -461,6 +455,7 @@ public class HomeController {
                 }
             });
         }else if(btn1.getText().equals("Rent")){
+            System.out.println("This ran for some reason");
             btn1.setOnAction(e->{
                 System.out.println(lbl +" RENT PRESSED");
                 Book.rentBook(lbl);

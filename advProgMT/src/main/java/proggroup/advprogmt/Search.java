@@ -14,12 +14,12 @@ public class Search{
     String result = null;
     static String [] booksArr = null;
     static String [] usersArr = null;
-    Alert alert = new Alert();
+    Alert alert;
     int lines;
     int i = 0;
     public void searchforBooks(String searchbar){
         if (searchbar.isEmpty()){
-            alert.display("Error","Nothing to search!", "red");
+            alert = new Alert("Error","Nothing to search!", "red");
             result = null;
         } else{
             try {
@@ -74,7 +74,7 @@ public class Search{
     }
     public void searchforUsers(String searchbar){
         if (searchbar.isEmpty()){
-            alert.display("Error","Nothing to search!", "red");
+            alert = new Alert("Error","Nothing to search!", "red");
             result = null;
         } else{
             try {
